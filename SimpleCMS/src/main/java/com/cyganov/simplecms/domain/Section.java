@@ -1,5 +1,6 @@
 package com.cyganov.simplecms.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +23,9 @@ public class Section {
 		this.published = published;
 		this.parent = parent;
 		this.children = children;
+	}
+
+	public Section() {
 	}
 
 	public Content getContent() {
@@ -57,10 +61,14 @@ public class Section {
 	}
 
 	public List<Section> getChildren() {
-		return children;
+		if (children != null){
+			return children;
+		}
+		return new ArrayList<Section>();
 	}
 
 	public void setChildren(List<Section> children) {
 		this.children = children;
 	}
+
 }

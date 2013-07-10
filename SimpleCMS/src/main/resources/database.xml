@@ -13,6 +13,13 @@
                 <content>
                     <body>its body of section 1.2!</body>
                 </content>
+                <children>
+                    <section name="section121" published="true">
+                        <content>
+                            <body>its last body!</body>
+                        </content>                       
+                    </section>
+                </children>
             </section>
             <section name="section13" published="false">
                 <content>

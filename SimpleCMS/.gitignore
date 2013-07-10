@@ -1,0 +1,15 @@
+*/target/*
+/.project
+/.settings
+/.externalToolBuilders
+/.classpath
+*.class
+*rebel.xml
+*.iml
+/projectFilesBackup/*
+.idea
+
+# Package Files #
+*.jar
+*.war
+*.ear

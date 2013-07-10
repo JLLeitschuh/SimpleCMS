@@ -11,17 +11,20 @@ public class Content {
 	private Section section;
 	private String body;
 
-	public Content(Section section, String content) {
+	public Content(Section section, String body) {
 		this.section = section;
-		this.body = content;
+		this.body = body;
 	}
 
-	public String getContent() {
+	public Content() {
+	}
+
+	public String getBody() {
 		return body;
 	}
 
-	public void setContent(String content) {
-		this.body = content;
+	public void setBody(String body) {
+		this.body = body;
 	}
 
 	public Section getSection() {
