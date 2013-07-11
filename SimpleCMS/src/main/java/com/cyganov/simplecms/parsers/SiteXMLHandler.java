@@ -18,7 +18,7 @@ import java.util.Stack;
  * Time: 10:28
  */
 
-public class SAXPars extends DefaultHandler {
+public class SiteXMLHandler extends DefaultHandler {
 
 	private String currentElement = "";
 	private List<Section> sectionList = new ArrayList<Section>();
