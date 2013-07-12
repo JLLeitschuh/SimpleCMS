@@ -30,6 +30,7 @@ public class StAXSiteParser implements SiteParser {
 	private Section lastParent = null;
 	private Section currentSection = null;
 	private Stack<Section> parents= new Stack<Section>();
+	private boolean rootParentFlag = false;
 
 	@Override
 	public Site parse(String filePath) {
@@ -71,7 +72,16 @@ public class StAXSiteParser implements SiteParser {
 					}
 				}
 
-				sectionList.add(currentSection);
+				if (!rootParentFlag){
+					sectionList.add(currentSection);
+					rootParentFlag = true;
+				}else {
+					currentSection.setParent(lastParent);
+					List<Section> childSectionList = lastParent.getChildren();
+					childSectionList.add(currentSection);
+					lastParent.setChildren(childSectionList);
+				}
+
 			}
 			if (localName.equals("children")){
 				parents.push(currentSection);
@@ -86,12 +96,6 @@ public class StAXSiteParser implements SiteParser {
 			String localName = qName.getLocalPart();
 
 			if (localName.equals("section")){
-				if (lastParent != null){
-					List<Section> sections = lastParent.getChildren();
-					sections.add(currentSection);
-					lastParent.setChildren(sections);
-					currentSection.setParent(lastParent);
-				}
 				currentSection = lastParent;
 			}
 			if (localName.equals("children")){
@@ -101,6 +105,7 @@ public class StAXSiteParser implements SiteParser {
 						lastParent = parents.peek();
 					}else{
 						lastParent = null;
+						rootParentFlag = false;
 					}
 				}
 			}
@@ -111,7 +116,6 @@ public class StAXSiteParser implements SiteParser {
 			if (currentElement.equals("body")){
 				Content content = new Content();
 				content.setBody(((Characters) event).getData());
-				content.setSection(currentSection);
 				currentSection.setContent(content);
 			}
 

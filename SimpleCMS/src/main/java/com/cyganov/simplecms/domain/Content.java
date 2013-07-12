@@ -8,11 +8,9 @@ package com.cyganov.simplecms.domain;
  */
 public class Content {
 
-	private Section section;
 	private String body;
 
-	public Content(Section section, String body) {
-		this.section = section;
+	public Content(String body) {
 		this.body = body;
 	}
 
@@ -27,11 +25,4 @@ public class Content {
 		this.body = body;
 	}
 
-	public Section getSection() {
-		return section;
-	}
-
-	public void setSection(Section section) {
-		this.section = section;
-	}
 }

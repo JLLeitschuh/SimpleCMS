@@ -1,4 +1,4 @@
-package com.cyganov.simplecms.parsers;
+package com.cyganov.simplecms.parsers.impl;
 
 import com.cyganov.simplecms.domain.Content;
 import com.cyganov.simplecms.domain.Section;
@@ -25,6 +25,7 @@ public class SiteXMLHandler extends DefaultHandler {
 	private Section lastParent = null;
 	private Section currentSection = null;
 	private Stack<Section> parents= new Stack<Section>();
+	private boolean rootParentFlag = false;
 
 	public Site getSite(){
 		Site site = new Site();
@@ -39,7 +40,15 @@ public class SiteXMLHandler extends DefaultHandler {
 			currentSection = new Section();
 			currentSection.setName(attributes.getValue("name"));
 			currentSection.setPublished(Boolean.parseBoolean(attributes.getValue("published")));
-			sectionList.add(currentSection);
+			if (!rootParentFlag){
+				sectionList.add(currentSection);
+				rootParentFlag = true;
+			}else {
+				currentSection.setParent(lastParent);
+				List<Section> childSectionList = lastParent.getChildren();
+				childSectionList.add(currentSection);
+				lastParent.setChildren(childSectionList);
+			}
 		}
 		if (qName.equals("children")){
 			parents.push(currentSection);
@@ -55,12 +64,6 @@ public class SiteXMLHandler extends DefaultHandler {
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		if (qName.equals("section")){
-			if (lastParent != null){
-				List<Section> sections = lastParent.getChildren();
-				sections.add(currentSection);
-				lastParent.setChildren(sections);
-				currentSection.setParent(lastParent);
-			}
 			currentSection = lastParent;
 		}
 		if (qName.equals("children")){
@@ -70,6 +73,7 @@ public class SiteXMLHandler extends DefaultHandler {
 					lastParent = parents.peek();
 				}else{
 					lastParent = null;
+					rootParentFlag = false;
 				}
 			}
 		}
@@ -82,7 +86,6 @@ public class SiteXMLHandler extends DefaultHandler {
 		if (currentElement.equals("body")){
 			Content content = new Content();
 			content.setBody(new String(ch, start, length));
-			content.setSection(currentSection);
 			currentSection.setContent(content);
 		}
 	}

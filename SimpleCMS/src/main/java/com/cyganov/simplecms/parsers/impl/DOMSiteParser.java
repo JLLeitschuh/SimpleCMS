@@ -26,18 +26,18 @@ import java.util.List;
  */
 public class DOMSiteParser implements SiteParser {
 
-	private List<Section> sectionList = new ArrayList<Section>();
-
 	@Override
 	public Site parse(String filePath) {
 
+		Site site = new Site();
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		try {
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(new File(filePath));
 			doc.getDocumentElement().normalize();
 			NodeList list = doc.getChildNodes().item(0).getChildNodes();
-			process(list, null);
+			List<Section> sectionList = process(list, null);
+			site.setSectionList(sectionList);
 
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
@@ -46,8 +46,6 @@ public class DOMSiteParser implements SiteParser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Site site = new Site();
-		site.setSectionList(sectionList);
 		return site;
 	}
 
@@ -62,10 +60,9 @@ public class DOMSiteParser implements SiteParser {
 					Element element = (Element) node;
 
 					Section currentSection = new Section();
-					sectionList.add(currentSection);
 					currentSection.setName(element.getAttribute("name"));
 					currentSection.setPublished(Boolean.parseBoolean(element.getAttribute("published")));
-					currentSection.setContent(makeContent(element, currentSection));
+					currentSection.setContent(makeContent(element));
 					currentSection.setParent(parentSection);
 
 					if (element.getElementsByTagName("children").getLength() != 0){
@@ -93,12 +90,11 @@ public class DOMSiteParser implements SiteParser {
 		return null;
 	}
 
-	private Content makeContent(Element element, Section currentSection){
+	private Content makeContent(Element element){
 		String body = getTagBody(element);
 		if (body != null){
 			Content content = new Content();
 			content.setBody(getTagBody(element));
-			content.setSection(currentSection);
 			return content;
 		}
 		return null;
