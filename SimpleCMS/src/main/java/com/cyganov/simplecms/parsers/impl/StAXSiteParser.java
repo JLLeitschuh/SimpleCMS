@@ -3,6 +3,7 @@ package com.cyganov.simplecms.parsers.impl;
 import com.cyganov.simplecms.domain.Content;
 import com.cyganov.simplecms.domain.Section;
 import com.cyganov.simplecms.domain.Site;
+import com.cyganov.simplecms.domain.XMLTagNames;
 import com.cyganov.simplecms.parsers.SiteParser;
 
 import javax.xml.namespace.QName;
@@ -57,17 +58,17 @@ public class StAXSiteParser implements SiteParser {
 			QName qName = ((StartElement) event).getName();
 			String localName = qName.getLocalPart();
 
-			if (localName.equals("section")){
+			if (localName.equals(XMLTagNames.SECTION)){
 				currentSection = new Section();
 
 				Iterator iterator = ((StartElement) event).getAttributes();
 				while (iterator.hasNext()) {
 					Attribute attribute = (Attribute) iterator.next();
 					String attributeName = attribute.getName().toString();
-					if (attributeName.equals("name")) {
+					if (attributeName.equals(XMLTagNames.NAME)) {
 						currentSection.setName(attribute.getValue());
 					}
-					if (attributeName.equals("published")) {
+					if (attributeName.equals(XMLTagNames.PUBLISHED)) {
 						currentSection.setPublished(Boolean.parseBoolean(attribute.getValue()));
 					}
 				}
@@ -83,7 +84,7 @@ public class StAXSiteParser implements SiteParser {
 				}
 
 			}
-			if (localName.equals("children")){
+			if (localName.equals(XMLTagNames.CHILDREN)){
 				parents.push(currentSection);
 				lastParent = currentSection;
 				currentSection = null;
@@ -95,10 +96,10 @@ public class StAXSiteParser implements SiteParser {
 			QName qName = ((EndElement) event).getName();
 			String localName = qName.getLocalPart();
 
-			if (localName.equals("section")){
+			if (localName.equals(XMLTagNames.SECTION)){
 				currentSection = lastParent;
 			}
-			if (localName.equals("children")){
+			if (localName.equals(XMLTagNames.CHILDREN)){
 				if (!parents.empty()){
 					parents.pop();
 					if (!parents.empty()){
@@ -113,7 +114,7 @@ public class StAXSiteParser implements SiteParser {
 
 		}
 		if (event.isCharacters()){
-			if (currentElement.equals("body")){
+			if (currentElement.equals(XMLTagNames.BODY)){
 				Content content = new Content();
 				content.setBody(((Characters) event).getData());
 				currentSection.setContent(content);

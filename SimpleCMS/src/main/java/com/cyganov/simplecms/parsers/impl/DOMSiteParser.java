@@ -3,6 +3,7 @@ package com.cyganov.simplecms.parsers.impl;
 import com.cyganov.simplecms.domain.Content;
 import com.cyganov.simplecms.domain.Section;
 import com.cyganov.simplecms.domain.Site;
+import com.cyganov.simplecms.domain.XMLTagNames;
 import com.cyganov.simplecms.parsers.SiteParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -55,18 +56,18 @@ public class DOMSiteParser implements SiteParser {
 		for (int i = 0; i < list.getLength(); i++) {
 
 			Node node = list.item(i);
-			if (node.getNodeName().equals("section")){
+			if (node.getNodeName().equals(XMLTagNames.SECTION)){
 				if (node.getNodeType() == Node.ELEMENT_NODE) {
 					Element element = (Element) node;
 
 					Section currentSection = new Section();
-					currentSection.setName(element.getAttribute("name"));
-					currentSection.setPublished(Boolean.parseBoolean(element.getAttribute("published")));
+					currentSection.setName(element.getAttribute(XMLTagNames.NAME));
+					currentSection.setPublished(Boolean.parseBoolean(element.getAttribute(XMLTagNames.PUBLISHED)));
 					currentSection.setContent(makeContent(element));
 					currentSection.setParent(parentSection);
 
-					if (element.getElementsByTagName("children").getLength() != 0){
-						NodeList nodes = element.getElementsByTagName("children").item(0).getChildNodes();
+					if (element.getElementsByTagName(XMLTagNames.CHILDREN).getLength() != 0){
+						NodeList nodes = element.getElementsByTagName(XMLTagNames.CHILDREN).item(0).getChildNodes();
 						currentSection.setChildren(process(nodes,currentSection));
 					}
 	                children.add(currentSection);
@@ -81,8 +82,8 @@ public class DOMSiteParser implements SiteParser {
 		NodeList list = element.getChildNodes();
 		for (int i = 0; i<list.getLength(); i++ ){
 			Node node = list.item(i);
-			if (node.getNodeName().equals("content")){
-				NodeList nodeList = element.getElementsByTagName("body").item(0).getChildNodes();
+			if (node.getNodeName().equals(XMLTagNames.CONTENT)){
+				NodeList nodeList = element.getElementsByTagName(XMLTagNames.BODY).item(0).getChildNodes();
 				Node value = nodeList.item(0);
 				return value.getNodeValue();
 			}

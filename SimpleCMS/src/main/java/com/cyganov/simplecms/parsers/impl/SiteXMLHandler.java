@@ -3,6 +3,7 @@ package com.cyganov.simplecms.parsers.impl;
 import com.cyganov.simplecms.domain.Content;
 import com.cyganov.simplecms.domain.Section;
 import com.cyganov.simplecms.domain.Site;
+import com.cyganov.simplecms.domain.XMLTagNames;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -36,10 +37,10 @@ public class SiteXMLHandler extends DefaultHandler {
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 
-		if (qName.equals("section")){
+		if (qName.equals(XMLTagNames.SECTION)){
 			currentSection = new Section();
-			currentSection.setName(attributes.getValue("name"));
-			currentSection.setPublished(Boolean.parseBoolean(attributes.getValue("published")));
+			currentSection.setName(attributes.getValue(XMLTagNames.NAME));
+			currentSection.setPublished(Boolean.parseBoolean(attributes.getValue(XMLTagNames.PUBLISHED)));
 			if (!rootParentFlag){
 				sectionList.add(currentSection);
 				rootParentFlag = true;
@@ -50,7 +51,7 @@ public class SiteXMLHandler extends DefaultHandler {
 				lastParent.setChildren(childSectionList);
 			}
 		}
-		if (qName.equals("children")){
+		if (qName.equals(XMLTagNames.CHILDREN)){
 			parents.push(currentSection);
 			lastParent = currentSection;
 			currentSection = null;
@@ -63,10 +64,10 @@ public class SiteXMLHandler extends DefaultHandler {
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		if (qName.equals("section")){
+		if (qName.equals(XMLTagNames.SECTION)){
 			currentSection = lastParent;
 		}
-		if (qName.equals("children")){
+		if (qName.equals(XMLTagNames.CHILDREN)){
 			if (!parents.empty()){
 				parents.pop();
 				if (!parents.empty()){
@@ -83,7 +84,7 @@ public class SiteXMLHandler extends DefaultHandler {
 
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
-		if (currentElement.equals("body")){
+		if (currentElement.equals(XMLTagNames.BODY)){
 			Content content = new Content();
 			content.setBody(new String(ch, start, length));
 			currentSection.setContent(content);
