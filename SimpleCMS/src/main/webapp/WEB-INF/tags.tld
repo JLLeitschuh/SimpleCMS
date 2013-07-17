@@ -1,0 +1,17 @@
+
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>2.0</jsp-version>
+    <short-name>TLD</short-name>
+    <tag>
+        <name>section</name>
+        <tag-class>com.cyganov.simplecms.tags.SectionDisplayTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>list</name>
+            <rtexprvalue>true</rtexprvalue>
+            <required>true</required>
+            <type>java.util.List</type>
+        </attribute>
+    </tag>
+</taglib>

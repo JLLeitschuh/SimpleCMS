@@ -3,6 +3,9 @@
 <site xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="schema.xsd">
     <section name="menu1" published="true">
+        <content>
+            <body>its menu1 body</body>
+        </content>
         <children>
             <section name="section11" published="true">
                 <content>
@@ -29,6 +32,9 @@
         </children>
     </section>
     <section name="menu2" published="true">
+        <content>
+            <body>its menu2 body</body>
+        </content>
         <children>
             <section name="section21" published="true">
                 <content>

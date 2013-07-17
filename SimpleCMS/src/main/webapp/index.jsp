@@ -1,5 +1,10 @@
 <html>
+<head>
+    <title>Index page</title>
+    <script type="text/javascript">
+        document.location.href = '${pageContext.servletContext.contextPath}/site';
+    </script>
+</head>
 <body>
-<h2>Hello World!</h2>
 </body>
 </html>
