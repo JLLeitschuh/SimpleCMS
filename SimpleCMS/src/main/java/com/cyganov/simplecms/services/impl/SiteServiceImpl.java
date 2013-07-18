@@ -3,6 +3,7 @@ package com.cyganov.simplecms.services.impl;
 import com.cyganov.simplecms.dao.SiteDao;
 import com.cyganov.simplecms.dao.impl.XMLSiteDao;
 import com.cyganov.simplecms.domain.Section;
+import com.cyganov.simplecms.domain.Site;
 import com.cyganov.simplecms.services.SiteService;
 
 import java.util.List;
@@ -30,10 +31,14 @@ public class SiteServiceImpl implements SiteService{
 
 	@Override
 	public void saveSection(Section section) {
-//		List<Section> list = siteDao.getSite().getSectionList();
-//		Section parent = findSection(list, section.getParent().getName());
-//		parent.getChildren().add(section);
-		//TODO write list in xml
+		List<Section> list = siteDao.getSite().getSectionList();
+		Section parent = findSection(list, section.getParent().getName());
+		List<Section> children = parent.getChildren();
+		children.add(section);
+		parent.setChildren(children);
+		Site site = new Site();
+		site.setSectionList(list);
+		siteDao.updateSite(site);
 	}
 
 	private Section findSection(List<Section> list, String name){

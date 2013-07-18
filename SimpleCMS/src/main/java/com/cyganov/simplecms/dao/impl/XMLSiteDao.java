@@ -4,6 +4,7 @@ import com.cyganov.simplecms.dao.SiteDao;
 import com.cyganov.simplecms.domain.Site;
 import com.cyganov.simplecms.xml.parsers.SiteParser;
 import com.cyganov.simplecms.xml.parsers.impl.StAXSiteParser;
+import com.cyganov.simplecms.xml.writer.XMLSiteWriter;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,7 +24,9 @@ public class XMLSiteDao implements SiteDao {
 	}
 
 	@Override
-	public void addSection() {
-
+	public void updateSite(Site site) {
+		String file = XMLSiteDao.class.getResource(filePath).getFile();
+		XMLSiteWriter xmlSiteWriter = new XMLSiteWriter();
+		xmlSiteWriter.writeFile(site, file);
 	}
 }
