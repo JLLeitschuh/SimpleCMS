@@ -3,19 +3,19 @@
 <site xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="schema.xsd">
 
-    <section name="menu1" published="true">
+    <section id="0" name="menu1" published="true">
         <children>
-            <section name="section11" published="false">
+            <section id="1" name="section11" published="false">
                 <content>
                     <body>its body of section 1.1!</body>
                 </content>
             </section>
-            <section name="section12" published="true">
+            <section id="2" name="section12" published="true">
                 <content>
                     <body>its body of section 1.2!</body>
                 </content>
                 <children>
-                    <section name="section121" published="true">
+                    <section id="3" name="section121" published="true">
                         <content>
                             <body>its last body!</body>
                         </content>                       
@@ -24,9 +24,9 @@
             </section>
         </children>
     </section>
-    <section name="menu2" published="true">
+    <section id="4" name="menu2" published="true">
         <children>
-            <section name="section21" published="true">
+            <section id="5" name="section21" published="true">
                 <content>
                     <body>its body of section 2.1!</body>
                 </content>

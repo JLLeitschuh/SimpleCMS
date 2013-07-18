@@ -43,7 +43,8 @@ public class XMLSiteWriter {
 	private void createDocument(List<Section> sections, Element element){
 
 		for (Section section : sections){
-			Element currentElement = element.addElement("section").addAttribute("name", section.getName())
+			Element currentElement = element.addElement("section").addAttribute("id", section.getId().toString())
+					.addAttribute("name", section.getName())
 					.addAttribute("published",Boolean.toString(section.isPublished()));
 
 			if (section.getContent() != null){

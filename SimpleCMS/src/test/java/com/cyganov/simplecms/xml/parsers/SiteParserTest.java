@@ -57,6 +57,7 @@ public class SiteParserTest {
 			Section currentSection = currentList.get(i);
 			Section parsedSection = parsedList.get(i);
 
+			assertEquals("wrong section id", currentSection.getId(), parsedSection.getId());
 			assertEquals("wrong section name", currentSection.getName(), parsedSection.getName());
 			assertTrue("wrong section published", currentSection.isPublished() == parsedSection.isPublished());
 			assertEquals("wrong section content", currentSection.getContent(), parsedSection.getContent());
@@ -77,8 +78,8 @@ public class SiteParserTest {
 		List<Section> rootChildren = new ArrayList<Section>();
 		List<Section> rootChildren2 = new ArrayList<Section>();
 
-		Section rootSection = new Section(null, "menu1", true, null, rootChildren);
-		Section rootSection2 = new Section(null, "menu2", true, null, rootChildren2);
+		Section rootSection = new Section(0, null, "menu1", true, null, rootChildren);
+		Section rootSection2 = new Section(4, null, "menu2", true, null, rootChildren2);
 		resultList.add(rootSection);
 		resultList.add(rootSection2);
 
@@ -86,17 +87,17 @@ public class SiteParserTest {
 
 		Content content = new Content("its body of section 1.1!");
 		Content content2 = new Content("its body of section 1.2!");
-		Section section = new Section(content, "section11", false, rootSection, null);
-		Section section2 = new Section(content2, "section12", true, rootSection, children2);
+		Section section = new Section(1, content, "section11", false, rootSection, null);
+		Section section2 = new Section(2, content2, "section12", true, rootSection, children2);
 		rootChildren.add(section);
 		rootChildren.add(section2);
 
 		content = new Content("its last body!");
-		section = new Section(content, "section121", true, section2, null);
+		section = new Section(3, content, "section121", true, section2, null);
 		children2.add(section);
 
 		content = new Content("its body of section 2.1!");
-		section = new Section(content, "section21", true, rootSection2, null);
+		section = new Section(5, content, "section21", true, rootSection2, null);
 		rootChildren2.add(section);
 
 		return resultList;

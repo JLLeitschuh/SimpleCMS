@@ -26,21 +26,20 @@ public class SiteServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String sectionName = req.getParameter("sectionName");
+		String sectionId = req.getParameter("sectionId");
 
-		Section section = siteService.getSectionByName(sectionName);
 		List<Section> sectionList = siteService.getSectionList();
 
-		Section result = null;
-		if (section != null){
-			result = section;
+		Section section = null;
+		if (sectionId != null){
+			section = siteService.getSectionById(Integer.parseInt(sectionId));
 		} else {
 			if (sectionList.size() != 0){
-				result = sectionList.get(0);
+				section = sectionList.get(0);
 			}
 		}
 
-		req.setAttribute("mainSection", result);
+		req.setAttribute("mainSection", section);
 		req.setAttribute("sections",sectionList);
 
 		RequestDispatcher reqDispatcher = getServletConfig().getServletContext().getRequestDispatcher("/site.jsp");

@@ -2,46 +2,46 @@
 
 <site xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="schema.xsd">
-    <section name="menu1" published="true">
+    <section id="0" name="menu1" published="true">
         <content>
             <body>its menu1 body</body>
         </content>
         <children>
-            <section name="section11" published="true">
+            <section id="1" name="section11" published="true">
                 <content>
                     <body>its body of section 1.1!</body>
                 </content>
             </section>
-            <section name="section12" published="true">
+            <section id="2" name="section12" published="true">
                 <content>
                     <body>its body of section 1.2!</body>
                 </content>
                 <children>
-                    <section name="section121" published="true">
+                    <section id="3" name="section121" published="true">
                         <content>
                             <body>its last body!</body>
                         </content>                       
                     </section>
                 </children>
             </section>
-            <section name="section13" published="false">
+            <section id="4" name="section13" published="false">
                 <content>
                     <body>its body of section 1.3!</body>
                 </content>
             </section>
         </children>
     </section>
-    <section name="menu2" published="true">
+    <section id="5" name="menu2" published="true">
         <content>
             <body>its menu2 body</body>
         </content>
         <children>
-            <section name="section21" published="true">
+            <section id="6" name="section21" published="true">
                 <content>
                     <body>its body of section 2.1!</body>
                 </content>
             </section>
-            <section name="section22" published="true">
+            <section id="7" name="section22" published="true">
                 <content>
                     <body>its body of section 2.2!</body>
                 </content>

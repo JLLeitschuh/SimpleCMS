@@ -5,7 +5,8 @@
 </head>
 <body>
 <form id="newSection" method="post">
-    <input type="hidden"  id="parentName" name="parentName" value="${parentName}">
+    <input type="hidden"  id="parentId" name="parentId" value="${parentId}">
+    <input type="hidden"  id="id" name="id" value="${section.id}">
     <table>
         <tr>
             <td>

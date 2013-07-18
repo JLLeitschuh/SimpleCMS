@@ -33,7 +33,7 @@ public class SectionDisplayTag extends SimpleTagSupport {
 		String structure = "";
 		for (Section section : list){
 			if (section.isPublished()){
-				structure += "<li><a href=\"/site?sectionName="+section.getName()+"\">"+section.getName()+"</a>";
+				structure += "<li><a href=\"/site?sectionId="+section.getId()+"\">"+section.getName()+"</a>";
 				if (section.getChildren().size() != 0){
 					structure +="<ul>";
 					structure += writeSections(section.getChildren());
@@ -41,7 +41,7 @@ public class SectionDisplayTag extends SimpleTagSupport {
 				}
 				structure +="</li>";
 			}else{
-				structure += "<li  class=\"ui-state-disabled\"><a href=\"#"+section.getName()+
+				structure += "<li  class=\"ui-state-disabled\"><a href=\"#"+section.getId()+
 						"\">"+section.getName()+"</a></li>";
 			}
 		}

@@ -39,6 +39,7 @@ public class SiteXMLHandler extends DefaultHandler {
 
 		if (qName.equals(XMLTagNames.SECTION)){
 			currentSection = new Section();
+			currentSection.setId(Integer.parseInt(attributes.getValue(XMLTagNames.ID)));
 			currentSection.setName(attributes.getValue(XMLTagNames.NAME));
 			currentSection.setPublished(Boolean.parseBoolean(attributes.getValue(XMLTagNames.PUBLISHED)));
 			if (!rootParentFlag){

@@ -65,6 +65,9 @@ public class StAXSiteParser implements SiteParser {
 				while (iterator.hasNext()) {
 					Attribute attribute = (Attribute) iterator.next();
 					String attributeName = attribute.getName().toString();
+					if (attributeName.equals(XMLTagNames.ID)) {
+						currentSection.setId(Integer.parseInt(attribute.getValue()));
+					}
 					if (attributeName.equals(XMLTagNames.NAME)) {
 						currentSection.setName(attribute.getValue());
 					}

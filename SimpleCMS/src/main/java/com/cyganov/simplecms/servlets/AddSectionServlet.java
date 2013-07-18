@@ -20,15 +20,22 @@ import java.io.IOException;
  */
 public class AddSectionServlet extends HttpServlet {
 
-	SiteService siteService = new SiteServiceImpl();
+	private SiteService siteService = new SiteServiceImpl();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String parentName = req.getParameter("parentName");
-		req.setAttribute("parentName", parentName);
+		String parentId = req.getParameter("parentId");
+		String sectionId = req.getParameter("sectionId");
 
-		req.setAttribute("section", new Section());
+		if (sectionId == null){
+			req.setAttribute("section", new Section());
+
+		} else {
+			req.setAttribute("section", siteService.getSectionById(Integer.parseInt(sectionId)));
+		}
+
+		req.setAttribute("parentId", parentId);
 
 		RequestDispatcher reqDispatcher = getServletConfig().getServletContext().getRequestDispatcher("/addSection.jsp");
 		reqDispatcher.forward(req, resp);
@@ -44,12 +51,23 @@ public class AddSectionServlet extends HttpServlet {
 
 	private Section getSection(HttpServletRequest request){
 		Section section = new Section();
+
+		String id = request.getParameter("id");
+		if (!id.equals("")){
+			section.setId(Integer.parseInt(id));
+		}
+
 		section.setName(request.getParameter("name"));
 		section.setPublished(Boolean.parseBoolean(request.getParameter("published")));
 		Content content = new Content();
 		content.setBody(request.getParameter("body"));
 		section.setContent(content);
-		section.setParent(siteService.getSectionByName(request.getParameter("parentName")));
+
+		Section parent = siteService.getSectionById(Integer.parseInt(request.getParameter("parentId")));
+		if (parent != null){
+			section.setParent(parent);
+		}
+
 		return section;
 	}
 

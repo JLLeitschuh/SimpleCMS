@@ -14,7 +14,7 @@ public interface SiteService {
 
 	public List<Section> getSectionList();
 
-	public Section getSectionByName(String name);
+	public Section getSectionById(Integer id);
 
 	public void saveSection(Section section);
 

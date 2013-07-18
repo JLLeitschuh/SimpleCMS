@@ -11,13 +11,15 @@ import java.util.List;
  */
 public class Section {
 
+	private Integer id;
 	private Content content;
 	private String name;
 	private boolean published;
 	private Section parent;
 	private List<Section> children;
 
-	public Section(Content content, String name, boolean published, Section parent, List<Section> children) {
+	public Section(Integer id, Content content, String name, boolean published, Section parent, List<Section> children) {
+		this.id = id;
 		this.content = content;
 		this.name = name;
 		this.published = published;
@@ -26,6 +28,14 @@ public class Section {
 	}
 
 	public Section() {
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Content getContent() {

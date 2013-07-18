@@ -38,6 +38,7 @@
     </tr>
 </table>
 
-<input type="button" value="Add Section" onclick="document.location.href='/add?parentName=${mainSection.name}'">
+<input type="button" value="Add Section" onclick="document.location.href='/add?parentId=${mainSection.id}'">
+<input type="button" value="Edit Section" onclick="document.location.href='/add?parentId=${mainSection.parent.id}&sectionId=${mainSection.id}'">
 </body>
 </html>

@@ -61,6 +61,7 @@ public class DOMSiteParser implements SiteParser {
 					Element element = (Element) node;
 
 					Section currentSection = new Section();
+					currentSection.setId(Integer.parseInt(element.getAttribute(XMLTagNames.ID)));
 					currentSection.setName(element.getAttribute(XMLTagNames.NAME));
 					currentSection.setPublished(Boolean.parseBoolean(element.getAttribute(XMLTagNames.PUBLISHED)));
 					currentSection.setContent(makeContent(element));
