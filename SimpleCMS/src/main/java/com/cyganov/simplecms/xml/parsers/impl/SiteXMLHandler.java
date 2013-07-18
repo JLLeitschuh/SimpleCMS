@@ -1,4 +1,4 @@
-package com.cyganov.simplecms.parsers.impl;
+package com.cyganov.simplecms.xml.parsers.impl;
 
 import com.cyganov.simplecms.domain.Content;
 import com.cyganov.simplecms.domain.Section;

@@ -2,8 +2,8 @@ package com.cyganov.simplecms.dao.impl;
 
 import com.cyganov.simplecms.dao.SiteDao;
 import com.cyganov.simplecms.domain.Site;
-import com.cyganov.simplecms.parsers.SiteParser;
-import com.cyganov.simplecms.parsers.impl.StAXSiteParser;
+import com.cyganov.simplecms.xml.parsers.SiteParser;
+import com.cyganov.simplecms.xml.parsers.impl.StAXSiteParser;
 
 /**
  * Created with IntelliJ IDEA.

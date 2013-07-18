@@ -1,7 +1,7 @@
-package com.cyganov.simplecms.parsers.impl;
+package com.cyganov.simplecms.xml.parsers.impl;
 
 import com.cyganov.simplecms.domain.Site;
-import com.cyganov.simplecms.parsers.SiteParser;
+import com.cyganov.simplecms.xml.parsers.SiteParser;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;

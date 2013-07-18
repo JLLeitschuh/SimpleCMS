@@ -26,7 +26,7 @@ public class SiteServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String sectionName = req.getParameter("parentName");
+		String sectionName = req.getParameter("sectionName");
 
 		Section section = siteService.getSectionByName(sectionName);
 		List<Section> sectionList = siteService.getSectionList();

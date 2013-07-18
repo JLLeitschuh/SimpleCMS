@@ -1,4 +1,4 @@
-package com.cyganov.simplecms.parsers;
+package com.cyganov.simplecms.xml.parsers;
 
 import com.cyganov.simplecms.domain.Site;
 

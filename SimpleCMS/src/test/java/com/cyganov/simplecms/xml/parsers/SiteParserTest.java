@@ -1,12 +1,12 @@
-package com.cyganov.simplecms.parsers;
+package com.cyganov.simplecms.xml.parsers;
 
 import com.cyganov.simplecms.domain.Content;
 import com.cyganov.simplecms.domain.Section;
 
 import com.cyganov.simplecms.domain.Site;
-import com.cyganov.simplecms.parsers.impl.DOMSiteParser;
-import com.cyganov.simplecms.parsers.impl.SAXSiteParser;
-import com.cyganov.simplecms.parsers.impl.StAXSiteParser;
+import com.cyganov.simplecms.xml.parsers.impl.DOMSiteParser;
+import com.cyganov.simplecms.xml.parsers.impl.SAXSiteParser;
+import com.cyganov.simplecms.xml.parsers.impl.StAXSiteParser;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
