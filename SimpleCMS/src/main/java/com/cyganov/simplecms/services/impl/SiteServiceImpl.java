@@ -20,6 +20,19 @@ public class SiteServiceImpl implements SiteService{
 	private SiteDao siteDao = new XMLSiteDao();
 
 	@Override
+	public void deleteSection(String id) {
+		List<Section> list = siteDao.getSite().getSectionList();
+
+		Section section = findSection(list, id);
+		Section parent = section.getParent();
+		parent.getChildren().remove(section);
+
+		Site site = new Site();
+		site.setSectionList(list);
+		siteDao.updateSite(site);
+	}
+
+	@Override
 	public List<Section> getSectionList() {
 		return siteDao.getSite().getSectionList();
 	}

@@ -14,12 +14,19 @@
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="/resources/demos/style.css" />
-    <script>
+    <script type="text/javascript">
         $(function() {
             $( ".menu").menu();
         });
+
+        $(document).ready(function(){
+            $('.close').click(function(){
+                document.location.href='/site?deleteId='+this.id;
+            });
+        });
+
     </script>
-    <style>
+    <style type="text/css">
         .ui-menu { width: 250px; }
     </style>
 </head>

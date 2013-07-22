@@ -101,6 +101,9 @@ public class StAXSiteParser implements SiteParser {
 
 			if (localName.equals(XMLTagNames.SECTION)){
 				currentSection = lastParent;
+				if (parents.empty()){
+					rootParentFlag = false;
+				}
 			}
 			if (localName.equals(XMLTagNames.CHILDREN)){
 				if (!parents.empty()){

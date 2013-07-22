@@ -37,7 +37,9 @@ public class SectionDisplayTag extends SimpleTagSupport {
 				while (root.getParent() != null){
 					root = root.getParent();
 				}
-				structure += "<li><a href=\"/site?rootId="+root.getId()+"&sectionId="+section.getId()+"\">"+section.getName()+"</a>";
+
+				structure +="<li><span id=\""+section.getId()+"\"class=\"close\" style=\"float:right; cursor: pointer;\">x</span>";
+				structure += "<a href=\"/site?rootId="+root.getId()+"&sectionId="+section.getId()+"\">"+section.getName()+"</a>";
 				if (section.getChildren().size() != 0){
 					structure +="<ul>";
 					structure += writeSections(section.getChildren());
@@ -45,8 +47,8 @@ public class SectionDisplayTag extends SimpleTagSupport {
 				}
 				structure +="</li>";
 			}else{
-				structure += "<li  class=\"ui-state-disabled\"><a href=\"#"+section.getId()+
-						"\">"+section.getName()+"</a></li>";
+				structure +="<li  class=\"ui-state-disabled\"><span id=\""+section.getId()+"\"class=\"close\" style=\"float:right; cursor: pointer;\">x</span>";
+				structure += "<a href=\"#"+section.getId()+"\">"+section.getName()+"</a></li>";
 			}
 		}
 		return structure;

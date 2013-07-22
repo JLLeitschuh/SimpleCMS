@@ -67,6 +67,9 @@ public class SiteXMLHandler extends DefaultHandler {
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		if (qName.equals(XMLTagNames.SECTION)){
 			currentSection = lastParent;
+			if (parents.empty()){
+				rootParentFlag = false;
+			}
 		}
 		if (qName.equals(XMLTagNames.CHILDREN)){
 			if (!parents.empty()){

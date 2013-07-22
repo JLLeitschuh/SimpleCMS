@@ -26,6 +26,11 @@ public class SiteServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		String deleteId = req.getParameter("deleteId");
+		if (deleteId != null){
+			siteService.deleteSection(deleteId);
+		}
+
 		List<Section> sectionList = siteService.getSectionList();
 
 		String rootId = req.getParameter("rootId");

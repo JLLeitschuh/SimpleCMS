@@ -18,4 +18,6 @@ public interface SiteService {
 
 	public void saveSection(Section section);
 
+	public void deleteSection(String id);
+
 }
