@@ -11,14 +11,14 @@ import java.util.List;
  */
 public class Section {
 
-	private Integer id;
+	private String id;
 	private Content content;
 	private String name;
 	private boolean published;
 	private Section parent;
 	private List<Section> children;
 
-	public Section(Integer id, Content content, String name, boolean published, Section parent, List<Section> children) {
+	public Section(String id, Content content, String name, boolean published, Section parent, List<Section> children) {
 		this.id = id;
 		this.content = content;
 		this.name = name;
@@ -30,11 +30,11 @@ public class Section {
 	public Section() {
 	}
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

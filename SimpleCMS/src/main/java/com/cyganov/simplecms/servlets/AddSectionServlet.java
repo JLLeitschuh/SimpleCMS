@@ -32,7 +32,7 @@ public class AddSectionServlet extends HttpServlet {
 			req.setAttribute("section", new Section());
 
 		} else {
-			req.setAttribute("section", siteService.getSectionById(Integer.parseInt(sectionId)));
+			req.setAttribute("section", siteService.getSectionById(sectionId));
 		}
 
 		req.setAttribute("parentId", parentId);
@@ -54,16 +54,16 @@ public class AddSectionServlet extends HttpServlet {
 
 		String id = request.getParameter("id");
 		if (!id.equals("")){
-			section.setId(Integer.parseInt(id));
+			section.setId(id);
 		}
-
 		section.setName(request.getParameter("name"));
 		section.setPublished(Boolean.parseBoolean(request.getParameter("published")));
+
 		Content content = new Content();
 		content.setBody(request.getParameter("body"));
 		section.setContent(content);
 
-		Section parent = siteService.getSectionById(Integer.parseInt(request.getParameter("parentId")));
+		Section parent = siteService.getSectionById(request.getParameter("parentId"));
 		if (parent != null){
 			section.setParent(parent);
 		}

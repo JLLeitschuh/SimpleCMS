@@ -3,7 +3,7 @@ package com.cyganov.simplecms.xml.parsers.impl;
 import com.cyganov.simplecms.domain.Content;
 import com.cyganov.simplecms.domain.Section;
 import com.cyganov.simplecms.domain.Site;
-import com.cyganov.simplecms.domain.XMLTagNames;
+import com.cyganov.simplecms.xml.XMLTagNames;
 import com.cyganov.simplecms.xml.parsers.SiteParser;
 
 import javax.xml.namespace.QName;
@@ -66,7 +66,7 @@ public class StAXSiteParser implements SiteParser {
 					Attribute attribute = (Attribute) iterator.next();
 					String attributeName = attribute.getName().toString();
 					if (attributeName.equals(XMLTagNames.ID)) {
-						currentSection.setId(Integer.parseInt(attribute.getValue()));
+						currentSection.setId(attribute.getValue());
 					}
 					if (attributeName.equals(XMLTagNames.NAME)) {
 						currentSection.setName(attribute.getValue());

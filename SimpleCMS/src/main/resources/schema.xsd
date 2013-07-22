@@ -15,7 +15,7 @@
             </xs:sequence>
             <xs:attribute name="id">
                 <xs:simpleType>
-                    <xs:restriction base="xs:integer"/>
+                    <xs:restriction base="xs:string"/>
                 </xs:simpleType>
             </xs:attribute>
             <xs:attribute name="name">

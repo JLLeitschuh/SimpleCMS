@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="/resources/demos/style.css" />
     <script>
         $(function() {
-            $( "#menu").menu();
+            $( ".menu").menu();
         });
     </script>
     <style>
@@ -28,7 +28,7 @@
 <table width="100%">
     <tr>
         <td width="20%" height="80%">
-            <ul id="menu">
+            <ul class="menu">
             <s:section list="${sections}"/>
             </ul>
         </td>

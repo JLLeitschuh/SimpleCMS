@@ -78,8 +78,8 @@ public class SiteParserTest {
 		List<Section> rootChildren = new ArrayList<Section>();
 		List<Section> rootChildren2 = new ArrayList<Section>();
 
-		Section rootSection = new Section(0, null, "menu1", true, null, rootChildren);
-		Section rootSection2 = new Section(4, null, "menu2", true, null, rootChildren2);
+		Section rootSection = new Section("0", null, "menu1", true, null, rootChildren);
+		Section rootSection2 = new Section("4", null, "menu2", true, null, rootChildren2);
 		resultList.add(rootSection);
 		resultList.add(rootSection2);
 
@@ -87,17 +87,17 @@ public class SiteParserTest {
 
 		Content content = new Content("its body of section 1.1!");
 		Content content2 = new Content("its body of section 1.2!");
-		Section section = new Section(1, content, "section11", false, rootSection, null);
-		Section section2 = new Section(2, content2, "section12", true, rootSection, children2);
+		Section section = new Section("1", content, "section11", false, rootSection, null);
+		Section section2 = new Section("2", content2, "section12", true, rootSection, children2);
 		rootChildren.add(section);
 		rootChildren.add(section2);
 
 		content = new Content("its last body!");
-		section = new Section(3, content, "section121", true, section2, null);
+		section = new Section("3", content, "section121", true, section2, null);
 		children2.add(section);
 
 		content = new Content("its body of section 2.1!");
-		section = new Section(5, content, "section21", true, rootSection2, null);
+		section = new Section("5", content, "section21", true, rootSection2, null);
 		rootChildren2.add(section);
 
 		return resultList;

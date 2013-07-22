@@ -3,7 +3,7 @@ package com.cyganov.simplecms.xml.parsers.impl;
 import com.cyganov.simplecms.domain.Content;
 import com.cyganov.simplecms.domain.Section;
 import com.cyganov.simplecms.domain.Site;
-import com.cyganov.simplecms.domain.XMLTagNames;
+import com.cyganov.simplecms.xml.XMLTagNames;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -39,7 +39,7 @@ public class SiteXMLHandler extends DefaultHandler {
 
 		if (qName.equals(XMLTagNames.SECTION)){
 			currentSection = new Section();
-			currentSection.setId(Integer.parseInt(attributes.getValue(XMLTagNames.ID)));
+			currentSection.setId(attributes.getValue(XMLTagNames.ID));
 			currentSection.setName(attributes.getValue(XMLTagNames.NAME));
 			currentSection.setPublished(Boolean.parseBoolean(attributes.getValue(XMLTagNames.PUBLISHED)));
 			if (!rootParentFlag){

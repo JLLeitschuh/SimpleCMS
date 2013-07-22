@@ -32,7 +32,7 @@ public class SiteServlet extends HttpServlet {
 
 		Section section = null;
 		if (sectionId != null){
-			section = siteService.getSectionById(Integer.parseInt(sectionId));
+			section = siteService.getSectionById(sectionId);
 		} else {
 			if (sectionList.size() != 0){
 				section = sectionList.get(0);

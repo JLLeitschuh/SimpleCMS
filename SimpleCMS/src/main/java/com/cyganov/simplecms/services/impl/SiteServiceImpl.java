@@ -7,7 +7,7 @@ import com.cyganov.simplecms.domain.Site;
 import com.cyganov.simplecms.services.SiteService;
 
 import java.util.List;
-import java.util.Random;
+import java.util.UUID;
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,7 +25,7 @@ public class SiteServiceImpl implements SiteService{
 	}
 
 	@Override
-	public Section getSectionById(Integer id) {
+	public Section getSectionById(String id) {
 		List<Section> list = siteDao.getSite().getSectionList();
 		return findSection(list, id);
 	}
@@ -33,11 +33,14 @@ public class SiteServiceImpl implements SiteService{
 	@Override
 	public void saveSection(Section section) {
 		List<Section> list = siteDao.getSite().getSectionList();
+		Section currentSection = null;
 
 		if (section.getId() == null){
+			//generate id for new section
 			section.setId(makeSectionId());
 		} else {
-			Section currentSection = findSection(list, section.getId());
+			//set children
+			currentSection = findSection(list, section.getId());
 			List<Section> children = currentSection.getChildren();
 			for (Section child : children){
 				child.setParent(section);
@@ -46,8 +49,13 @@ public class SiteServiceImpl implements SiteService{
 		}
 
 		if (section.getParent() == null){
+			//add section to root list(if parent = null, it's root section)
+			if (currentSection != null){
+				list.remove(currentSection);
+			}
 			list.add(section);
 		} else {
+			//set section to parent children's list
 			Section parent = findSection(list, section.getParent().getId());
 			List<Section> children = parent.getChildren();
 			Section copy = findSection(children, section.getId());
@@ -58,12 +66,13 @@ public class SiteServiceImpl implements SiteService{
 			parent.setChildren(children);
 
 		}
+
 		Site site = new Site();
 		site.setSectionList(list);
 		siteDao.updateSite(site);
 	}
 
-	private Section findSection(List<Section> list, Integer id){
+	private Section findSection(List<Section> list, String id){
 		Section result = null;
 		for (Section section : list){
 			if (section.getId().equals(id)){
@@ -77,8 +86,9 @@ public class SiteServiceImpl implements SiteService{
 		return result;
 	}
 
-	private Integer makeSectionId(){
-		return new Random().nextInt(Long.bitCount(System.currentTimeMillis()));//TODO fix: it has collisions
+	private String makeSectionId(){
+		UUID uuid = UUID.randomUUID();
+		return uuid.toString();
 	}
 
 }

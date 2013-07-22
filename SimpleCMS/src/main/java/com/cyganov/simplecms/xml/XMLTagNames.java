@@ -1,4 +1,4 @@
-package com.cyganov.simplecms.domain;
+package com.cyganov.simplecms.xml;
 
 /**
  * Created with IntelliJ IDEA.
