@@ -27,12 +27,21 @@
 
 <table width="100%">
     <tr>
-        <td width="20%" height="80%">
+        <td colspan="2" height="10%" align="center">
+            <h1>
+                <c:forEach var="root" items="${rootSections}">
+                    <a href="/site?rootId=${root.id}&sectionId=${root.id}">${root.name}</a>
+                </c:forEach>
+            </h1>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%" height="90%">
             <ul class="menu">
             <s:section list="${sections}"/>
             </ul>
         </td>
-        <td width="80%" height="80%" style="text-align: center">
+        <td width="80%" height="80%" align="center">
             <c:out value="${mainSection.content.body}"/>
         </td>
     </tr>

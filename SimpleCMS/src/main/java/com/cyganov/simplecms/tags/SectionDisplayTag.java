@@ -33,7 +33,11 @@ public class SectionDisplayTag extends SimpleTagSupport {
 		String structure = "";
 		for (Section section : list){
 			if (section.isPublished()){
-				structure += "<li><a href=\"/site?sectionId="+section.getId()+"\">"+section.getName()+"</a>";
+				Section root = section;
+				while (root.getParent() != null){
+					root = root.getParent();
+				}
+				structure += "<li><a href=\"/site?rootId="+root.getId()+"&sectionId="+section.getId()+"\">"+section.getName()+"</a>";
 				if (section.getChildren().size() != 0){
 					structure +="<ul>";
 					structure += writeSections(section.getChildren());

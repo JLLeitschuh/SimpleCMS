@@ -26,10 +26,19 @@ public class SiteServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String sectionId = req.getParameter("sectionId");
-
 		List<Section> sectionList = siteService.getSectionList();
 
+		String rootId = req.getParameter("rootId");
+		List<Section> sections = null;
+		if (rootId != null){
+			sections = siteService.getSectionById(rootId).getChildren();
+		} else {
+			if (sectionList.size() != 0){
+				sections = sectionList.get(0).getChildren();
+			}
+		}
+
+		String sectionId = req.getParameter("sectionId");
 		Section section = null;
 		if (sectionId != null){
 			section = siteService.getSectionById(sectionId);
@@ -40,7 +49,8 @@ public class SiteServlet extends HttpServlet {
 		}
 
 		req.setAttribute("mainSection", section);
-		req.setAttribute("sections",sectionList);
+		req.setAttribute("rootSections", sectionList);
+		req.setAttribute("sections", sections);
 
 		RequestDispatcher reqDispatcher = getServletConfig().getServletContext().getRequestDispatcher("/site.jsp");
 		reqDispatcher.forward(req, resp);
