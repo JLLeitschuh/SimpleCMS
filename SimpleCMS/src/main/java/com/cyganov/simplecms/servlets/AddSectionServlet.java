@@ -4,6 +4,7 @@ import com.cyganov.simplecms.domain.Content;
 import com.cyganov.simplecms.domain.Section;
 import com.cyganov.simplecms.services.SiteService;
 import com.cyganov.simplecms.services.impl.SiteServiceImpl;
+import com.cyganov.simplecms.xml.XMLTagNames;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -52,15 +53,15 @@ public class AddSectionServlet extends HttpServlet {
 	private Section getSection(HttpServletRequest request){
 		Section section = new Section();
 
-		String id = request.getParameter("id");
+		String id = request.getParameter(XMLTagNames.ID);
 		if (!id.equals("")){
 			section.setId(id);
 		}
-		section.setName(request.getParameter("name"));
-		section.setPublished(Boolean.parseBoolean(request.getParameter("published")));
+		section.setName(request.getParameter(XMLTagNames.NAME));
+		section.setPublished(Boolean.parseBoolean(request.getParameter(XMLTagNames.PUBLISHED)));
 
 		Content content = new Content();
-		content.setBody(request.getParameter("body"));
+		content.setBody(request.getParameter(XMLTagNames.BODY));
 		section.setContent(content);
 
 		Section parent = siteService.getSectionById(request.getParameter("parentId"));

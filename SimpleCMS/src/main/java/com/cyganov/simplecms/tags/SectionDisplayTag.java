@@ -30,7 +30,8 @@ public class SectionDisplayTag extends SimpleTagSupport {
 	}
 
 	private String writeSections(List<Section> list) throws IOException {
-		String structure = "";
+
+		StringBuilder structure = new StringBuilder();
 		for (Section section : list){
 			if (section.isPublished()){
 				Section root = section;
@@ -38,19 +39,23 @@ public class SectionDisplayTag extends SimpleTagSupport {
 					root = root.getParent();
 				}
 
-				structure +="<li><span id=\""+section.getId()+"\"class=\"close\" style=\"float:right; cursor: pointer;\">x</span>";
-				structure += "<a href=\"/site?rootId="+root.getId()+"&sectionId="+section.getId()+"\">"+section.getName()+"</a>";
+				structure.append("<li><span id=\"").append(section.getId())
+						.append("\"class=\"close\" style=\"float:right; cursor: pointer;\">x</span>");
+				structure.append("<a href=\"/site?rootId=").append(root.getId())
+						.append("&sectionId=").append(section.getId()).append("\">").append(section.getName()).append("</a>");
 				if (section.getChildren().size() != 0){
-					structure +="<ul>";
-					structure += writeSections(section.getChildren());
-					structure +="</ul>";
+					structure.append("<ul>");
+					structure.append(writeSections(section.getChildren()));
+					structure.append("</ul>");
 				}
-				structure +="</li>";
+				structure.append("</li>");
 			}else{
-				structure +="<li  class=\"ui-state-disabled\"><span id=\""+section.getId()+"\"class=\"close\" style=\"float:right; cursor: pointer;\">x</span>";
-				structure += "<a href=\"#"+section.getId()+"\">"+section.getName()+"</a></li>";
+				structure.append("<li  class=\"ui-state-disabled\"><span id=\"")
+						.append(section.getId()).append("\"class=\"close\" style=\"float:right; cursor: pointer;\">x</span>");
+				structure.append("<a href=\"#").append(section.getId()).append("\">").append(section.getName()).append("</a></li>");
 			}
 		}
-		return structure;
+		return structure.toString();
 	}
+
 }

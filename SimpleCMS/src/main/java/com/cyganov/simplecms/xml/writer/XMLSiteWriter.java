@@ -2,6 +2,7 @@ package com.cyganov.simplecms.xml.writer;
 
 import com.cyganov.simplecms.domain.Section;
 import com.cyganov.simplecms.domain.Site;
+import com.cyganov.simplecms.xml.XMLTagNames;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -24,7 +25,7 @@ public class XMLSiteWriter {
 		List<Section> sections = site.getSectionList();
 
 		Document document = DocumentHelper.createDocument();
-		Element root = document.addElement( "site" );
+		Element root = document.addElement(XMLTagNames.SITE);
 		root.addAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance")
 				.addAttribute("xsi:noNamespaceSchemaLocation", "schema.xsd");
 
@@ -43,16 +44,16 @@ public class XMLSiteWriter {
 	private void createDocument(List<Section> sections, Element element){
 
 		for (Section section : sections){
-			Element currentElement = element.addElement("section").addAttribute("id", section.getId())
-					.addAttribute("name", section.getName())
-					.addAttribute("published",Boolean.toString(section.isPublished()));
+			Element currentElement = element.addElement(XMLTagNames.SECTION).addAttribute(XMLTagNames.ID, section.getId())
+					.addAttribute(XMLTagNames.NAME, section.getName())
+					.addAttribute(XMLTagNames.PUBLISHED,Boolean.toString(section.isPublished()));
 
 			if (section.getContent() != null){
-				currentElement.addElement("content").addElement("body").addText(section.getContent().getBody());
+				currentElement.addElement(XMLTagNames.CONTENT).addElement(XMLTagNames.BODY).addText(section.getContent().getBody());
 			}
 
 			if (section.getChildren().size() != 0){
-				Element children = currentElement.addElement("children");
+				Element children = currentElement.addElement(XMLTagNames.CHILDREN);
 				createDocument(section.getChildren(), children);
 			}
 

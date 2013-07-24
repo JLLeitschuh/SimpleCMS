@@ -6,8 +6,9 @@ package com.cyganov.simplecms.xml;
  * Date: 15.07.13
  * Time: 12:01
  */
-public class XMLTagNames {
+public final class XMLTagNames {
 
+	public static final String SITE = "site";
 	public static final String SECTION = "section";
 	public static final String ID = "id";
 	public static final String NAME = "name";
