@@ -3,7 +3,7 @@ package com.cyganov.simplecms.servlets;
 import com.cyganov.simplecms.domain.Content;
 import com.cyganov.simplecms.domain.Section;
 import com.cyganov.simplecms.services.SiteService;
-import com.cyganov.simplecms.services.impl.SiteServiceImpl;
+import com.cyganov.simplecms.services.impl.XMLSiteService;
 import com.cyganov.simplecms.xml.XMLTagNames;
 
 import javax.servlet.RequestDispatcher;
@@ -21,7 +21,7 @@ import java.io.IOException;
  */
 public class AddSectionServlet extends HttpServlet {
 
-	private SiteService siteService = new SiteServiceImpl();
+	private SiteService siteService = new XMLSiteService();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

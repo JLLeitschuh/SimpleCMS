@@ -1,7 +1,7 @@
 package com.cyganov.simplecms.servlets;
 
 import com.cyganov.simplecms.services.SiteService;
-import com.cyganov.simplecms.services.impl.SiteServiceImpl;
+import com.cyganov.simplecms.services.impl.XMLSiteService;
 import com.cyganov.simplecms.domain.Section;
 
 import javax.servlet.RequestDispatcher;
@@ -21,7 +21,7 @@ import java.util.List;
 
 public class SiteServlet extends HttpServlet {
 
-	private SiteService siteService = new SiteServiceImpl();
+	private SiteService siteService = new XMLSiteService();
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

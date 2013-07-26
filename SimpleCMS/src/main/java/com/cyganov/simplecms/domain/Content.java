@@ -1,13 +1,23 @@
 package com.cyganov.simplecms.domain;
 
+import javax.persistence.*;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Tsyhanou Siarhei
  * Date: 09.07.13
  * Time: 11:13
  */
+@Entity
+@Table(name = "content")
 public class Content {
 
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+
+	@Column(name = "body")
 	private String body;
 
 	public Content(String body) {
@@ -15,6 +25,14 @@ public class Content {
 	}
 
 	public Content() {
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getBody() {

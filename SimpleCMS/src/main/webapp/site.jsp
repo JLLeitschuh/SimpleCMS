@@ -42,19 +42,19 @@
             </h1>
         </td>
     </tr>
-    <tr>
-        <td width="20%" height="90%">
-            <ul class="menu">
-            <s:section list="${sections}"/>
-            </ul>
-        </td>
-        <td width="80%" height="80%" align="center">
-            <c:out value="${mainSection.content.body}"/>
-        </td>
-    </tr>
+    <%--<tr>--%>
+        <%--<td width="20%" height="90%">--%>
+            <%--<ul class="menu">--%>
+            <%--<s:section list="${sections}"/>--%>
+            <%--</ul>--%>
+        <%--</td>--%>
+        <%--<td width="80%" height="80%" align="center">--%>
+            <%--<c:out value="${mainSection.content.body}"/>--%>
+        <%--</td>--%>
+    <%--</tr>--%>
 </table>
 
-<input type="button" value="Add Section" onclick="document.location.href='/add?parentId=${mainSection.id}'">
-<input type="button" value="Edit Section" onclick="document.location.href='/add?parentId=${mainSection.parent.id}&sectionId=${mainSection.id}'">
+<%--<input type="button" value="Add Section" onclick="document.location.href='/add?parentId=${mainSection.id}'">--%>
+<%--<input type="button" value="Edit Section" onclick="document.location.href='/add?parentId=${mainSection.parent.id}&sectionId=${mainSection.id}'">--%>
 </body>
 </html>

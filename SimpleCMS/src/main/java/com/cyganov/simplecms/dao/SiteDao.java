@@ -13,4 +13,5 @@ public interface SiteDao {
 	public Site getSite();
 
 	public void updateSite(Site site);
+
 }

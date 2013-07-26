@@ -15,7 +15,7 @@ import java.util.UUID;
  * Date: 15.07.13
  * Time: 12:20
  */
-public class SiteServiceImpl implements SiteService{
+public class XMLSiteService implements SiteService{
 
 	private SiteDao siteDao = new XMLSiteDao();
 

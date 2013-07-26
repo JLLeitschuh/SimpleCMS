@@ -1,0 +1,9 @@
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!--<mapping class="com.cyganov.simplecms.domain.Site"/>-->
+        <mapping class="com.cyganov.simplecms.domain.Content"/>
+        <mapping class="com.cyganov.simplecms.domain.Section"/>
+    </session-factory>
+</hibernate-configuration>

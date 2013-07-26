@@ -1,5 +1,6 @@
 package com.cyganov.simplecms.domain;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,13 +10,31 @@ import java.util.List;
  * Date: 09.07.13
  * Time: 11:12
  */
+@Entity
+@Table(name = "section")
 public class Section {
 
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String id;
+
+	@OneToOne
+	@JoinColumn(name = "content_id")
 	private Content content;
+
+	@Column(name = "name")
 	private String name;
+
+	@Column(name = "published")
 	private boolean published;
+
+	@ManyToOne
+	@JoinColumn(name="parent_id")
 	private Section parent;
+
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name="parent_id")
 	private List<Section> children;
 
 	public Section(String id, Content content, String name, boolean published, Section parent, List<Section> children) {
