@@ -42,3 +42,13 @@ button {
 .style a:hover {
     background: orange;
 }
+.logout{
+    text-align: right;
+}
+.logout a{
+    color: #00008b;
+    background: orange;
+    border:2px solid white;
+    border-radius:6px;
+    text-decoration: none;
+}

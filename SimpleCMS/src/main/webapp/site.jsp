@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/tags.tld" prefix="s" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 
 <head>
@@ -27,6 +28,7 @@
 </head>
 
 <body>
+<sec:authorize access="hasRole('ROLE_SUPERVISOR')">
 <table width="100%">
     <tr class="style">
         <td colspan="2" height="10%" align="center">
@@ -51,6 +53,10 @@
 
 <button onclick="document.location.href='/add?parentId=${mainSection.id}&sectionId='">Add Section</button>
 <button onclick="document.location.href='/add?parentId=${mainSection.parent.id}&sectionId=${mainSection.id}'">Edit Section</button>
-</body>
 
+</sec:authorize>
+<div class="logout" style="text-align: right">
+    <a href="<c:url value="/j_spring_security_logout" />" > Logout </a>
+</div>
+</body>
 </html>
