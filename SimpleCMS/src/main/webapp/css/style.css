@@ -1,0 +1,44 @@
+body {
+    background-image: url(/img/body.jpg);
+}
+button {
+    background:#ffd700;
+    background:-moz-linear-gradient(top,#ffd700 0%,orange 100%);
+    background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#ffd700),color-stop(100%,orange));
+    background:-webkit-linear-gradient(top,#ffd700 0%,orange 100%);
+    background:-o-linear-gradient(top,#ffd700 0%,orange 100%);
+    background:-ms-linear-gradient(top,#ffd700 0%,orange 100%);
+    background:linear-gradient(top,#ffd700 0%,orange 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5CCD00',endColorstr='#4AA400',GradientType=0);
+    padding:3px 8px;
+    color:#00008b;
+    font-family:'Helvetica Neue',sans-serif;
+    font-size:12px;
+    border-radius:6px;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border:2px solid white;
+    cursor: pointer;
+}
+.menu li{
+    background: #add8e6;
+}
+.menu li a {
+    color: #00008b;
+}
+.menu li a:hover {
+    background: orange;
+}
+.style td {
+    border-bottom: 2px solid white;
+}
+.style a {
+    color: #00008b;
+    background: #add8e6;
+    border:2px solid white;
+    border-radius:6px;
+    text-decoration: none;
+}
+.style a:hover {
+    background: orange;
+}
