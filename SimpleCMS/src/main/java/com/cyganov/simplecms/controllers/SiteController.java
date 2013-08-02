@@ -4,10 +4,7 @@ import com.cyganov.simplecms.domain.Section;
 import com.cyganov.simplecms.services.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -27,6 +24,30 @@ public class SiteController {
 	@RequestMapping(value = "/login")
 	public String login() {
 		return "redirect:/site?rootId=&sectionId=";
+	}
+
+	@RequestMapping(value = "/mngt", method = RequestMethod.GET)
+	public ModelAndView loadSiteTree(@RequestParam("rootId") String rootId, @RequestParam("sectionId") String sectionId) {
+		ModelAndView modelAndView = new ModelAndView("mngt");
+		List<Section> sectionList = sectionService.getSections();
+
+		Section section = null;
+		if (sectionId.equals("")){
+			//default values
+			section = sectionList.get(0);
+		} else {
+			section = sectionService.getSectionById(sectionId);
+		}
+
+		modelAndView.addObject("section", section);
+		modelAndView.addObject("sections", sectionList);
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/mngt", method = RequestMethod.POST)
+	public String editSection(@ModelAttribute("section") Section section, @ModelAttribute("rootId") String rootId) {
+		sectionService.updateSection(section, rootId);
+		return "redirect:/mngt?rootId="+rootId+"&sectionId="+section.getId();
 	}
 
 	@RequestMapping(value = "/site", method = RequestMethod.GET)
@@ -70,15 +91,15 @@ public class SiteController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String editUser(@ModelAttribute("section") Section section, @ModelAttribute("parentId") String parentId) {
+	public String addSection(@ModelAttribute("section") Section section, @ModelAttribute("parentId") String parentId) {
 		sectionService.updateSection(section, parentId);
 		return "redirect:/site?rootId=&sectionId=";
 	}
 
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String deleteSection(@RequestParam("id") String id) {
+	@RequestMapping(value = "/{page}/delete", method = RequestMethod.GET)
+	public String deleteSection(@RequestParam("id") String id, @PathVariable("page") String page) {
 		sectionService.deleteSectionById(id);
-		return "redirect:/site?rootId=&sectionId=";
+		return "redirect:/"+page+"?rootId=&sectionId=";
 	}
 
 }

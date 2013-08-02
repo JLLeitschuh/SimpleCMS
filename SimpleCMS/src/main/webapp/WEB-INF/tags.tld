@@ -14,4 +14,15 @@
             <type>java.util.List</type>
         </attribute>
     </tag>
+    <tag>
+        <name>tree</name>
+        <tag-class>com.cyganov.simplecms.tags.SectionTreeTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>list</name>
+            <rtexprvalue>true</rtexprvalue>
+            <required>true</required>
+            <type>java.util.List</type>
+        </attribute>
+    </tag>
 </taglib>

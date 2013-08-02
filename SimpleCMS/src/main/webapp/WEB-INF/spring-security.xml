@@ -11,6 +11,7 @@
     <security:http auto-config="true">
         <security:intercept-url pattern="/login*" access="ROLE_SUPERVISOR"/>
         <security:intercept-url pattern="/site*" access="IS_AUTHENTICATED_REMEMBERED"/>
+        <security:intercept-url pattern="/mngt*" access="IS_AUTHENTICATED_REMEMBERED"/>
         <security:logout logout-success-url="/login"/>
     </security:http>
 

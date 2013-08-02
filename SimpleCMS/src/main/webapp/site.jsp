@@ -18,7 +18,7 @@
         $(document).ready(function(){
             $('.close').click(function(){
 //                document.location.href='/site?deleteId='+this.id;
-                document.location.href='/delete?id='+this.id;
+                document.location.href='/site/delete?id='+this.id;
             });
         });
     </script>
