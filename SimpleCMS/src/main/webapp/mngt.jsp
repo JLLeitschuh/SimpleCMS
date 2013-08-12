@@ -5,7 +5,6 @@
 <html>
 <head>
     <title>Site Management</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
@@ -19,9 +18,6 @@
 <sec:authorize access="hasRole('ROLE_SUPERVISOR')">
 
     <table width="100%">
-        <tr class="style">
-            <td colspan="2" height="10%"></td>
-        </tr>
         <tr>
             <td width="20%" height="90%">
                 <ul class="tree">
