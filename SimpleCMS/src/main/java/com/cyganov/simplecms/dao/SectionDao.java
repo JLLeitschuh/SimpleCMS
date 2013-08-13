@@ -18,7 +18,7 @@ public interface SectionDao {
 
 	public void saveOrUpdate(Section section);
 
-	public void deleteById(String id);
+	public void delete(Section section);
 
 	public List<Section> getRootSections();
 

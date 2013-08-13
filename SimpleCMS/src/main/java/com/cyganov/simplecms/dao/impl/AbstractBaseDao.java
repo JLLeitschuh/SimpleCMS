@@ -1,4 +1,4 @@
-package com.cyganov.simplecms.dao;
+package com.cyganov.simplecms.dao.impl;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Date: 25.07.13
  * Time: 10:39
  */
-public abstract class BaseDao {
+public abstract class AbstractBaseDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;

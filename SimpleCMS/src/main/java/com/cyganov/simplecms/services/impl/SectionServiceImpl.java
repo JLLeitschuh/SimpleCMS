@@ -5,7 +5,8 @@ import com.cyganov.simplecms.dao.SectionDao;
 import com.cyganov.simplecms.domain.Section;
 import com.cyganov.simplecms.services.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * Date: 29.07.13
  * Time: 14:00
  */
-@Repository
+@Service
 public class SectionServiceImpl implements SectionService {
 
 	@Autowired
@@ -35,6 +36,7 @@ public class SectionServiceImpl implements SectionService {
 		return sectionDao.getChildrenByParent(section);
 	}
 
+	@Transactional(readOnly = false)
 	@Override
 	public void updateSection(Section section, String parentId) {
 		Section parent = sectionDao.getById(parentId);
@@ -50,13 +52,13 @@ public class SectionServiceImpl implements SectionService {
 		sectionDao.saveOrUpdate(section);
 	}
 
+	@Transactional(readOnly = false)
 	@Override
 	public void deleteSectionById(String id) {
 		Section section = sectionDao.getById(id);
-		Integer contentId = section.getContent().getId();
 
-		sectionDao.deleteById(id);
-		contentDao.deleteById(contentId);
+		sectionDao.delete(section);
+		contentDao.delete(section.getContent());
 	}
 
 	@Override

@@ -12,6 +12,6 @@ public interface ContentDao {
 
 	public void saveOrUpdate(Content content);
 
-	public void deleteById(Integer id);
+	public void delete(Content content);
 
 }

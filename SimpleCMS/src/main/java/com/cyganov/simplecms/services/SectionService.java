@@ -1,6 +1,7 @@
 package com.cyganov.simplecms.services;
 
 import com.cyganov.simplecms.domain.Section;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * Date: 29.07.13
  * Time: 13:58
  */
+@Transactional(readOnly = true)
 public interface SectionService {
 
 	public Section getSectionById(String id);
