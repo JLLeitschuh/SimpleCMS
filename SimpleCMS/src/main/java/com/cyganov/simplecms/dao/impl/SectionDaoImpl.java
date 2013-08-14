@@ -26,7 +26,6 @@ public class SectionDaoImpl extends AbstractBaseDao implements SectionDao{
 	@SuppressWarnings("unchecked")
 	public List<Section> getChildrenByParent(Section section) {
 		return getSession().createCriteria(Section.class)
-				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 				.add(Restrictions.eq("parent", section)).list();
 	}
 
@@ -44,8 +43,12 @@ public class SectionDaoImpl extends AbstractBaseDao implements SectionDao{
 	@SuppressWarnings("unchecked")
 	public List<Section> getRootSections() {
 		return getSession().createCriteria(Section.class)
-				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 				.add(Restrictions.isNull("parent")).list();
+	}
+
+	@Override
+	public void update(Section section) {
+		getSession().merge(section);
 	}
 
 }

@@ -59,6 +59,6 @@
     </table>
     <button type="submit">Submit</button>
 </form:form >
-<button onclick="document.location.href='/site?rootId=&sectionId='">Back</button>
+<button onclick="document.location.href='/mngt'">Back</button>
 </body>
 </html>

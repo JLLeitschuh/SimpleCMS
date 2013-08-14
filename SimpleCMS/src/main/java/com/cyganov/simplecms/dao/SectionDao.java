@@ -22,4 +22,6 @@ public interface SectionDao {
 
 	public List<Section> getRootSections();
 
+	public void update(Section section);
+
 }

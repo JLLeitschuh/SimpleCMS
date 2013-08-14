@@ -1,5 +1,7 @@
 package com.cyganov.simplecms.domain;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 /**
@@ -13,12 +15,17 @@ import javax.persistence.*;
 public class Content {
 
 	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	@Column(name = "id", length = 40)
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	private String id;
 
-	@Column(name = "body")
+	@Column(name = "body", length = 255)
 	private String body;
+
+	@OneToOne
+	@JoinColumn(name = "section_id")
+	private Section section;
 
 	public Content(String body) {
 		this.body = body;
@@ -27,11 +34,19 @@ public class Content {
 	public Content() {
 	}
 
-	public Integer getId() {
+	public Section getSection() {
+		return section;
+	}
+
+	public void setSection(Section section) {
+		this.section = section;
+	}
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

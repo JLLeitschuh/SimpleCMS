@@ -23,6 +23,7 @@
                 <ul class="tree">
                     <s:tree list="${sections}"/>
                 </ul>
+                <button onclick="document.location.href='/mngt/add'">Add Root Section</button>
             </td>
             <td width="80%" height="80%" align="center">
                 <form:form id="section" commandName="section" method="post">
@@ -49,12 +50,12 @@
                             </td>
                         </tr>
                     </table>
-                    <button style="width: 100px; height: 20px" type="submit">Submit</button>
+                    <button style="width: 100px;" type="submit">Submit</button>
                 </form:form >
+                    <button onclick="document.location.href='/mngt/add?parentId=${section.id}'">Add Section</button>
             </td>
         </tr>
     </table>
-
 </sec:authorize>
 <div class="logout" style="text-align: right">
     <a href="<c:url value="/j_spring_security_logout" />" > Logout </a>

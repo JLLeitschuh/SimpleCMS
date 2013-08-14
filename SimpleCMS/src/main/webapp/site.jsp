@@ -14,12 +14,11 @@
             $( ".menu").menu();
         });
 
-        $(document).ready(function(){
-            $('.close').click(function(){
+//        $(document).ready(function(){
+//            $('.close').click(function(){
 //                document.location.href='/site?deleteId='+this.id;
-                document.location.href='/site/delete?id='+this.id;
-            });
-        });
+//            });
+//        });
     </script>
     <style>
         .ui-menu { width: 250px; }
@@ -28,6 +27,7 @@
 
 <body>
 <sec:authorize access="hasRole('ROLE_SUPERVISOR')">
+
 <table width="100%">
     <tr class="style">
         <td colspan="2" height="10%" align="center">
@@ -49,9 +49,6 @@
         </td>
     </tr>
 </table>
-
-<button onclick="document.location.href='/add?parentId=${mainSection.id}&sectionId='">Add Section</button>
-<button onclick="document.location.href='/add?parentId=${mainSection.parent.id}&sectionId=${mainSection.id}'">Edit Section</button>
 
 </sec:authorize>
 <div class="logout" style="text-align: right">

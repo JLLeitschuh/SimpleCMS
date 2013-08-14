@@ -1,5 +1,7 @@
 package com.cyganov.simplecms.domain;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,15 +17,15 @@ import java.util.List;
 public class Section {
 
 	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", length = 40)
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
 
-	@OneToOne
-	@JoinColumn(name = "content_id")
+	@OneToOne(mappedBy="section", cascade = CascadeType.ALL)
 	private Content content;
 
-	@Column(name = "name")
+	@Column(name = "name", length = 100)
 	private String name;
 
 	@Column(name = "published")
@@ -33,8 +35,7 @@ public class Section {
 	@JoinColumn(name="parent_id")
 	private Section parent;
 
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name="parent_id")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
 	private List<Section> children;
 
 	public Section(String id, Content content, String name, boolean published, Section parent, List<Section> children) {

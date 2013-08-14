@@ -4,6 +4,7 @@ import com.cyganov.simplecms.dao.ContentDao;
 import com.cyganov.simplecms.dao.SectionDao;
 import com.cyganov.simplecms.domain.Section;
 import com.cyganov.simplecms.services.SectionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,29 +41,46 @@ public class SectionServiceImpl implements SectionService {
 	@Override
 	public void updateSection(Section section, String parentId) {
 		Section parent = sectionDao.getById(parentId);
-		if (!section.getId().equals("")){
-			List<Section> children = getChildrenByParentId(section.getId());
-			section.setChildren(children);
+
+		if (!StringUtils.isEmpty(section.getId())){
+			sectionDao.update(refreshedSection(section, parent));
 		} else {
-			section.setId(null);
+			sectionDao.saveOrUpdate(newSection(section, parent));
 		}
 		section.setParent(parent);
 
-		contentDao.saveOrUpdate(section.getContent());
-		sectionDao.saveOrUpdate(section);
 	}
 
 	@Transactional(readOnly = false)
 	@Override
 	public void deleteSectionById(String id) {
 		Section section = sectionDao.getById(id);
-
 		sectionDao.delete(section);
-		contentDao.delete(section.getContent());
 	}
 
 	@Override
 	public List<Section> getSections() {
 		return sectionDao.getRootSections();
+	}
+
+	private Section newSection(Section section, Section parent){
+		section.setParent(parent);
+		if (parent != null){
+			parent.getChildren().add(section);
+		}
+		section.setId(null);
+		section.getContent().setSection(section);
+		section.getContent().setId(null);
+		return section;
+	}
+
+	private Section refreshedSection(Section section, Section parent){
+		Section currentSection = sectionDao.getById(section.getId());
+		currentSection.setParent(parent);
+		currentSection.setName(section.getName());
+		currentSection.setPublished(section.isPublished());
+		section.getContent().setSection(currentSection);
+		currentSection.setContent(section.getContent());
+		return currentSection;
 	}
 }
