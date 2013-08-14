@@ -15,8 +15,6 @@
     </script>
 </head>
 <body>
-<sec:authorize access="hasRole('ROLE_SUPERVISOR')">
-
     <table width="100%">
         <tr>
             <td width="20%" height="90%">
@@ -56,9 +54,8 @@
             </td>
         </tr>
     </table>
-</sec:authorize>
-<div class="logout" style="text-align: right">
-    <a href="<c:url value="/j_spring_security_logout" />" > Logout </a>
-</div>
+    <div class="logout" style="text-align: right">
+        <a href="<c:url value="/j_spring_security_logout" />" > Logout </a>
+    </div>
 </body>
 </html>

@@ -22,11 +22,6 @@ public class SiteController {
 	@Autowired
 	private SectionService sectionService;
 
-	@RequestMapping(value = "/login")
-	public String login() {
-		return "redirect:/site";
-	}
-
 	@RequestMapping(value = "/site", method = RequestMethod.GET)
 	public ModelAndView loadSite(@RequestParam(value = "rootId", required = false) String rootId, @RequestParam(value = "sectionId", required = false) String sectionId) {
 		ModelAndView modelAndView = new ModelAndView("site");
