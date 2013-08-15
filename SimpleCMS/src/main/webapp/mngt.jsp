@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <html>
 <head>
     <title>Site Management</title>
@@ -30,6 +31,11 @@
                         <tr>
                             <td>
                                 Section Name:<form:input path="name" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Date(DD-MM-YYY):<form:input path="date"/>
                             </td>
                         </tr>
                         <tr>

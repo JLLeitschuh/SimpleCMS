@@ -35,10 +35,15 @@
 <input type="hidden"  id="parentId" name="parentId" value="${parentId}">
 <form:form id="section" commandName="section" method="post">
     <form:hidden path="id" />
-    <table>
+    <table width="50%" height="50%">
         <tr>
             <td>
                 Section Name:<form:input path="name" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Date(DD-MM-YYY):<form:input path="date"/>
             </td>
         </tr>
         <tr>
@@ -52,12 +57,12 @@
         </tr>
         <tr>
             <td colspan="2">
-                 <form:hidden path="content.id" />
-                 <form:textarea path="content.body" />
+                <form:hidden path="content.id" />
+                <form:textarea cssStyle="width: 80%; height: 500px" path="content.body" />
             </td>
         </tr>
     </table>
-    <button type="submit">Submit</button>
+    <button style="width: 100px;" type="submit">Submit</button>
 </form:form >
 <button onclick="document.location.href='/mngt'">Back</button>
 </body>

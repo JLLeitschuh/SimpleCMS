@@ -79,6 +79,7 @@ public class SectionServiceImpl implements SectionService {
 		currentSection.setParent(parent);
 		currentSection.setName(section.getName());
 		currentSection.setPublished(section.isPublished());
+		currentSection.setDate(section.getDate());
 		section.getContent().setSection(currentSection);
 		currentSection.setContent(section.getContent());
 		return currentSection;

@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,6 +32,10 @@ public class Section {
 	@Column(name = "published")
 	private boolean published;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "date")
+	private Date date;
+
 	@ManyToOne
 	@JoinColumn(name="parent_id")
 	private Section parent;
@@ -48,6 +53,14 @@ public class Section {
 	}
 
 	public Section() {
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public String getId() {

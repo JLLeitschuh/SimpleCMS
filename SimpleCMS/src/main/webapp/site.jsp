@@ -44,7 +44,12 @@
             </ul>
         </td>
         <td width="80%" height="80%" align="center">
-            <c:out value="${mainSection.content.body}"/>
+            <div class="date">
+                <c:out value="${mainSection.date}"/>
+            </div>
+            <div>
+                <c:out value="${mainSection.content.body}"/>
+            </div>
         </td>
     </tr>
 </table>

@@ -4,10 +4,13 @@ import com.cyganov.simplecms.domain.Section;
 import com.cyganov.simplecms.services.SectionService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -89,6 +92,13 @@ public class SiteController {
 	public String deleteSection(@RequestParam("id") String id) {
 		sectionService.deleteSectionById(id);
 		return "redirect:/mngt";
+	}
+
+	@InitBinder
+	protected void initBinder(ServletRequestDataBinder binder) throws Exception {
+		binder.registerCustomEditor(java.util.Date.class,
+				"date",
+				new CustomDateEditor(new SimpleDateFormat("dd-MM-yyy"), true));
 	}
 
 }
