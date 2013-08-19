@@ -4,5 +4,6 @@
     <session-factory>
         <mapping class="com.cyganov.simplecms.domain.Content"/>
         <mapping class="com.cyganov.simplecms.domain.Section"/>
+        <mapping class="com.cyganov.simplecms.domain.User"/>
     </session-factory>
 </hibernate-configuration>

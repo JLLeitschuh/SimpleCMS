@@ -19,4 +19,8 @@
         <put-attribute name="body" value="/mngt.jsp"/>
     </definition>
 
+    <definition name="users" extends="baseLayout">
+        <put-attribute name="body" value="/users.jsp"/>
+    </definition>
+
 </tiles-definitions>

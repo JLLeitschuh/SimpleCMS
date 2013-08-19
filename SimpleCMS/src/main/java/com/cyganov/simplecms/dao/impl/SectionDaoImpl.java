@@ -2,7 +2,6 @@ package com.cyganov.simplecms.dao.impl;
 
 import com.cyganov.simplecms.dao.SectionDao;
 import com.cyganov.simplecms.domain.Section;
-import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 

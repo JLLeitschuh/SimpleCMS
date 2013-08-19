@@ -82,3 +82,18 @@ button {
 .date {
     color: orange;
 }
+.users {
+    padding-top: 50px;
+    width: 100%;
+    text-align: center;
+}
+.users td{
+    border:2px solid white;
+    background: #add8e6;
+    color: #00008b;
+}
+.users .head td{
+    border:2px solid white;
+    background: orange;
+    color: #00008b;
+}

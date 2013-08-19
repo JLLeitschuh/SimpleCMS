@@ -8,19 +8,28 @@
     <!--Security configuration-->
     <bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
 
+    <import resource="hibernate-context.xml"/>
+
     <security:http auto-config="true">
-        <security:intercept-url pattern="/mngt*" access="ROLE_SUPERVISOR"/>
-        <security:intercept-url pattern="/mngt/*" access="ROLE_SUPERVISOR"/>
+        <security:intercept-url pattern="/users*" access="ROLE_SUPERVISOR"/>
+        <security:intercept-url pattern="/users/*" access="ROLE_SUPERVISOR"/>
+        <security:intercept-url pattern="/mngt*" access="ROLE_ADMIN,ROLE_SUPERVISOR"/>
+        <security:intercept-url pattern="/mngt/*" access="ROLE_ADMIN,ROLE_SUPERVISOR"/>
         <security:logout logout-success-url="/site"/>
     </security:http>
 
     <security:authentication-manager>
         <security:authentication-provider>
-            <security:user-service>
-                <security:user name="stsyhanou" password="12345" authorities="ROLE_SUPERVISOR"/>
-            </security:user-service>
+            <security:jdbc-user-service data-source-ref="dataSource" />
         </security:authentication-provider>
     </security:authentication-manager>
 
+    <!--<security:authentication-manager>-->
+        <!--<security:authentication-provider>-->
+            <!--<security:user-service>-->
+                <!--<security:user name="stsyhanou" password="12345" authorities="ROLE_ADMIN"/>-->
+            <!--</security:user-service>-->
+        <!--</security:authentication-provider>-->
+    <!--</security:authentication-manager>-->
 
 </beans>
