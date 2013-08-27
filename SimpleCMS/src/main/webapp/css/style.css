@@ -72,6 +72,8 @@ button {
     background: orange;
 }
 .top {
+    font-size:12px;
+    font-style: italic;
     color: white;
     background: #add8e6;
 }
@@ -96,4 +98,24 @@ button {
     border:2px solid white;
     background: orange;
     color: #00008b;
+}
+.tree{
+}
+.edit{
+}
+.rf-trn-lbl{
+    text-align: center;
+    width: 150px;
+    height: 30px;
+    background: #add8e6;
+    border:2px solid white;
+    border-radius:6px;
+    color: #00008b;
+}
+.rf-trn-ico-colps.rf-trn-ico{
+    display: none;
+
+}
+.rf-trn-ico.rf-trn-ico-exp{
+    display: none;
 }

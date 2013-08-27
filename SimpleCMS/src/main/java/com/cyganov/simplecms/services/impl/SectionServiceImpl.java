@@ -40,7 +40,10 @@ public class SectionServiceImpl implements SectionService {
 	@Transactional(readOnly = false)
 	@Override
 	public void updateSection(Section section, String parentId) {
-		Section parent = sectionDao.getById(parentId);
+		Section parent = null;
+		if (parentId != null){
+			parent = sectionDao.getById(parentId);
+		}
 
 		if (!StringUtils.isEmpty(section.getId())){
 			sectionDao.update(refreshedSection(section, parent));

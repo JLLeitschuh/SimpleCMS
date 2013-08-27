@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
+<ui:composition template="WEB-INF/templates/main.xhtml">
+    <ui:define name="body">
+        <h:panelGrid columns="2" columnClasses="tree,edit" width="60%">
+            <h:form>
+                <rich:tree id="tree" var="node" toggleType="client" render="edit-content"
+                           selectionType="ajax" selectionChangeListener="#{siteBean.selectionChanged}">
+                    <rich:treeModelRecursiveAdaptor nodes="#{node.children}" roots="#{siteBean.sectionList}">
+                        <rich:treeNode>#{node.name}</rich:treeNode>
+                    </rich:treeModelRecursiveAdaptor>
+                </rich:tree>
+            </h:form>
+            <h:form>
+                <a4j:outputPanel id="edit-content" layout="block">
+                    <rich:panel header="Edit" rendered="#{not empty siteBean.currentSelection}">
+                        <h:inputHidden value="#{siteBean.currentSelection.id}"  required="true" />
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    Section Name:<h:inputText value="#{siteBean.currentSelection.name}"  required="true"  />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Date(DD-MM-YYY):<rich:calendar value="#{siteBean.currentSelection.date}"  required="true" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Published:<h:selectBooleanCheckbox value="#{siteBean.currentSelection.published}"  required="true" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <h:inputHidden value="#{siteBean.currentSelection.content.id}"  required="true" />
+                                    <rich:editor toolbar="full" width="100%" value="#{siteBean.currentSelection.content.body}"  required="true" />
+                                </td>
+                            </tr>
+                        </table>
+                        <a4j:commandButton value="Save" action="#{siteBean.submit}" render="tree"/>
+                    </rich:panel>
+                </a4j:outputPanel>
+            </h:form>
+        </h:panelGrid>
+    </ui:define>
+</ui:composition>
+</html>

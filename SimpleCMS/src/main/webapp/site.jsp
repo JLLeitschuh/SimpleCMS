@@ -48,7 +48,7 @@
                 <c:out value="${mainSection.date}"/>
             </div>
             <div>
-                <c:out value="${mainSection.content.body}"/>
+                ${mainSection.content.body}
             </div>
         </td>
     </tr>

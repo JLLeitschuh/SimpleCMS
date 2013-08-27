@@ -65,47 +65,47 @@ public class SiteController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/mngt", method = RequestMethod.GET)
-	public ModelAndView loadSiteTree(@RequestParam(value = "rootId", required = false) String rootId, @RequestParam(value = "sectionId", required = false) String sectionId) {
-		ModelAndView modelAndView = new ModelAndView("mngt");
-		List<Section> sectionList = sectionService.getSections();
-
-		Section section = null;
-		if (StringUtils.isEmpty(sectionId)){
-			//default values
-			if (sectionList.size() != 0){
-				section = sectionList.get(0);
-			}
-		} else {
-			section = sectionService.getSectionById(sectionId);
-		}
-
-		modelAndView.addObject("section", section);
-		modelAndView.addObject("sections", sectionList);
-		return modelAndView;
-	}
-
-	@RequestMapping(value = "/mngt", method = RequestMethod.POST)
-	public String editSection(@ModelAttribute("section") Section section, @ModelAttribute("rootId") String rootId) {
-		sectionService.updateSection(section, rootId);
-		return "redirect:/mngt?sectionId="+section.getId();
-	}
-
-	@RequestMapping(value = "/mngt/add", method = RequestMethod.GET)
-	public ModelAndView addSection(@RequestParam(value = "parentId", required = false) String parentId) {
-		ModelAndView modelAndView = new ModelAndView("addSection");
-
-		modelAndView.addObject("parentId", parentId);
-		modelAndView.addObject("section", new Section());
-
-		return modelAndView;
-	}
-
-	@RequestMapping(value = "/mngt/add", method = RequestMethod.POST)
-	public String addSection(@ModelAttribute("section") Section section, @ModelAttribute("parentId") String parentId) {
-		sectionService.updateSection(section, parentId);
-		return "redirect:/mngt";
-	}
+//	@RequestMapping(value = "/mngt", method = RequestMethod.GET)
+//	public ModelAndView loadSiteTree(@RequestParam(value = "rootId", required = false) String rootId, @RequestParam(value = "sectionId", required = false) String sectionId) {
+//		ModelAndView modelAndView = new ModelAndView("mngt");
+//		List<Section> sectionList = sectionService.getSections();
+//
+//		Section section = null;
+//		if (StringUtils.isEmpty(sectionId)){
+//			//default values
+//			if (sectionList.size() != 0){
+//				section = sectionList.get(0);
+//			}
+//		} else {
+//			section = sectionService.getSectionById(sectionId);
+//		}
+//
+//		modelAndView.addObject("section", section);
+//		modelAndView.addObject("sections", sectionList);
+//		return modelAndView;
+//	}
+//
+//	@RequestMapping(value = "/mngt", method = RequestMethod.POST)
+//	public String editSection(@ModelAttribute("section") Section section, @ModelAttribute("rootId") String rootId) {
+//		sectionService.updateSection(section, rootId);
+//		return "redirect:/mngt?sectionId="+section.getId();
+//	}
+//
+//	@RequestMapping(value = "/mngt/add", method = RequestMethod.GET)
+//	public ModelAndView addSection(@RequestParam(value = "parentId", required = false) String parentId) {
+//		ModelAndView modelAndView = new ModelAndView("addSection");
+//
+//		modelAndView.addObject("parentId", parentId);
+//		modelAndView.addObject("section", new Section());
+//
+//		return modelAndView;
+//	}
+//
+//	@RequestMapping(value = "/mngt/add", method = RequestMethod.POST)
+//	public String addSection(@ModelAttribute("section") Section section, @ModelAttribute("parentId") String parentId) {
+//		sectionService.updateSection(section, parentId);
+//		return "redirect:/mngt";
+//	}
 
 	@RequestMapping(value = "/users/add", method = RequestMethod.GET)
 	public ModelAndView addUser(@RequestParam(value = "id", required = false) String id) {
@@ -125,7 +125,7 @@ public class SiteController {
 		return "redirect:/users";
 	}
 
-	@RequestMapping(value = "/{page}/delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/{page}/delete", method = RequestMethod.GET) //fix: delete mngt
 	public String delete(@RequestParam("id") String id, @PathVariable("page") String page) {
 		if (page.equals("users")){
 			userService.deleteByName(id);
