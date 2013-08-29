@@ -100,8 +100,10 @@ button {
     color: #00008b;
 }
 .tree{
+    text-align: left;
 }
 .edit{
+    text-align: center;
 }
 .rf-trn-lbl{
     text-align: center;

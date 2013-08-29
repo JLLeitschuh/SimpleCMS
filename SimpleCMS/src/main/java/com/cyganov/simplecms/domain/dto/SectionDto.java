@@ -4,7 +4,6 @@ import com.cyganov.simplecms.domain.Content;
 import com.google.common.collect.Iterators;
 
 import javax.swing.tree.TreeNode;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;

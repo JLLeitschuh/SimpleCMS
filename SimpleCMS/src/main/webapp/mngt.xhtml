@@ -6,17 +6,39 @@
     <ui:define name="body">
         <h:panelGrid columns="2" columnClasses="tree,edit" width="60%">
             <h:form>
-                <rich:tree id="tree" var="node" toggleType="client" render="edit-content"
-                           selectionType="ajax" selectionChangeListener="#{siteBean.selectionChanged}">
+                <rich:tree id="tree" var="node" toggleType="client" render="edit-content delete" toggleNodeEvent="dblclick"
+                           selectionType="ajax" selectionChangeListener="#{siteBean.selectionChanged}" >
                     <rich:treeModelRecursiveAdaptor nodes="#{node.children}" roots="#{siteBean.sectionList}">
                         <rich:treeNode>#{node.name}</rich:treeNode>
                     </rich:treeModelRecursiveAdaptor>
                 </rich:tree>
+                <rich:contextMenu id="treeMenu" target="tree" mode="ajax">
+                    <rich:menuItem label="Delete" onclick="#{rich:component('confirm')}.show()"/>
+                    <rich:menuItem label="Edit" render="edit-content" onclick="#{rich:component('edit')}.show()"/>
+                    <rich:menuItem label="Add New" render="edit-content" action="#{siteBean.newSection}" onclick="#{rich:component('edit')}.show()"/>
+                </rich:contextMenu>
             </h:form>
+        </h:panelGrid>
+
+        <rich:popupPanel id="confirm" modal="true" autosized="true" resizeable="false">
+            <h:form>
+                <a4j:outputPanel id="delete" layout="block">
+                    <div>
+                        <h:outputText value="Do you really want to delete '#{siteBean.currentSelection.name}' section?"/>
+                    </div>
+                    <div align="center">
+                        <a4j:commandButton type="submit" value="Yes" action="#{siteBean.delete}" oncomplete="#{rich:component('confirm')}.hide(); return false;" render="tree treeMenu"/>
+                        <h:button value="No" onclick="#{rich:component('confirm')}.hide(); return false;"/>
+                    </div>
+                </a4j:outputPanel>
+            </h:form>
+        </rich:popupPanel>
+
+        <rich:popupPanel id="edit" modal="true" autosized="true" resizeable="false">
             <h:form>
                 <a4j:outputPanel id="edit-content" layout="block">
                     <rich:panel header="Edit" rendered="#{not empty siteBean.currentSelection}">
-                        <h:inputHidden value="#{siteBean.currentSelection.id}"  required="true" />
+                        <h:inputHidden value="#{siteBean.currentSelection.id}"/>
                         <table width="100%">
                             <tr>
                                 <td>
@@ -25,7 +47,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    Date(DD-MM-YYY):<rich:calendar value="#{siteBean.currentSelection.date}"  required="true" />
+                                    Date:<rich:calendar value="#{siteBean.currentSelection.date}"  required="true" />
                                 </td>
                             </tr>
                             <tr>
@@ -35,16 +57,18 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <h:inputHidden value="#{siteBean.currentSelection.content.id}"  required="true" />
-                                    <rich:editor toolbar="full" width="100%" value="#{siteBean.currentSelection.content.body}"  required="true" />
+                                    <h:inputHidden value="#{siteBean.currentSelection.content.id}"/>
+                                    <rich:editor toolbar="full" width="100%" value="#{siteBean.currentSelection.content.body}" required="true" />
                                 </td>
                             </tr>
                         </table>
-                        <a4j:commandButton value="Save" action="#{siteBean.submit}" render="tree"/>
+                        <a4j:commandButton type="submit" value="Save" action="#{siteBean.submit}" oncomplete="#{rich:component('edit')}.hide();return false;" render="tree treeMenu"/>
                     </rich:panel>
                 </a4j:outputPanel>
             </h:form>
-        </h:panelGrid>
+            <h:button value="Close" onclick="#{rich:component('edit')}.hide(); return false;"/>
+        </rich:popupPanel>
+
     </ui:define>
 </ui:composition>
 </html>
