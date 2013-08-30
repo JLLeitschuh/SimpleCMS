@@ -4,9 +4,9 @@
       xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
 <ui:composition template="WEB-INF/templates/main.xhtml">
     <ui:define name="body">
-        <h:panelGrid columns="2" columnClasses="tree,edit" width="60%">
+        <h:panelGrid columns="2" columnClasses="tree,view" width="100%">
             <h:form>
-                <rich:tree id="tree" var="node" toggleType="client" render="edit-content delete" toggleNodeEvent="dblclick"
+                <rich:tree id="tree" var="node" toggleType="client" render="edit-content delete view" toggleNodeEvent="dblclick"
                            selectionType="ajax" selectionChangeListener="#{siteBean.selectionChanged}" >
                     <rich:treeModelRecursiveAdaptor nodes="#{node.children}" roots="#{siteBean.sectionList}">
                         <rich:treeNode>#{node.name}</rich:treeNode>
@@ -17,6 +17,12 @@
                     <rich:menuItem label="Edit" render="edit-content" onclick="#{rich:component('edit')}.show()"/>
                     <rich:menuItem label="Add New" render="edit-content" action="#{siteBean.newSection}" onclick="#{rich:component('edit')}.show()"/>
                 </rich:contextMenu>
+                <a4j:commandLink value="Add Root Section" action="#{siteBean.newRootSection}" onclick="#{rich:component('edit')}.show()" render="edit-content"/>
+            </h:form>
+            <h:form>
+                <a4j:outputPanel id="view">
+                    #{siteBean.currentSelection.content.body}  <!--************View**************-->
+                </a4j:outputPanel>
             </h:form>
         </h:panelGrid>
 

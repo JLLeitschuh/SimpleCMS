@@ -66,6 +66,13 @@ public class SiteBean {
 		currentSelection = section;
 	}
 
+	public void newRootSection(){
+		SectionDto section = new SectionDto();
+		Content content = new Content();
+		section.setContent(content);
+		currentSelection = section;
+	}
+
 	public void delete(){
 		sectionService.deleteSectionById(currentSelection.getId());
 		currentSelection = null;

@@ -40,7 +40,7 @@ public class Section {
 	@JoinColumn(name="parent_id")
 	private Section parent;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parent", cascade = CascadeType.ALL)
 	private List<Section> children;
 
 	public Section(String id, Content content, String name, boolean published, Section parent, List<Section> children) {

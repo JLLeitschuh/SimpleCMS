@@ -106,6 +106,15 @@ public class SiteController {
 //		sectionService.updateSection(section, parentId);
 //		return "redirect:/mngt";
 //	}
+//	@RequestMapping(value = "/{page}/delete", method = RequestMethod.GET)
+//	public String delete(@RequestParam("id") String id, @PathVariable("page") String page) {
+//		if (page.equals("users")){
+//			userService.deleteByName(id);
+//		} else if (page.equals("mngt")) {
+//			sectionService.deleteSectionById(id);
+//		}
+//		return "redirect:/"+page;
+//	}
 
 	@RequestMapping(value = "/users/add", method = RequestMethod.GET)
 	public ModelAndView addUser(@RequestParam(value = "id", required = false) String id) {
@@ -125,14 +134,10 @@ public class SiteController {
 		return "redirect:/users";
 	}
 
-	@RequestMapping(value = "/{page}/delete", method = RequestMethod.GET) //fix: delete mngt
-	public String delete(@RequestParam("id") String id, @PathVariable("page") String page) {
-		if (page.equals("users")){
-			userService.deleteByName(id);
-		} else if (page.equals("mngt")) {
-			sectionService.deleteSectionById(id);
-		}
-		return "redirect:/"+page;
+	@RequestMapping(value = "/users/delete", method = RequestMethod.GET)
+	public String delete(@RequestParam("id") String id) {
+		userService.deleteByName(id);
+		return "redirect:/users";
 	}
 
 	@InitBinder

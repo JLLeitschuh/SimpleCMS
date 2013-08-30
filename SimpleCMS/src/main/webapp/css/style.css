@@ -100,10 +100,22 @@ button {
     color: #00008b;
 }
 .tree{
+    width: 20%;
+    height: 600px;
     text-align: left;
 }
-.edit{
+.tree a{
+    color: #00008b;
+    background: orange;
+    border:2px solid white;
+    border-radius:6px;
+    text-decoration: none;
+}
+.view{
+    width: 80%;
+    height: 600px;
     text-align: center;
+    border:2px solid white;
 }
 .rf-trn-lbl{
     text-align: center;
