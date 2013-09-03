@@ -30,6 +30,8 @@ public class SiteBean {
 
 	private SectionDto currentSelection = null;
 	private List<SectionDto> sectionList;
+	private boolean view;
+	private String status;
 
 	@PostConstruct
 	public void load(){
@@ -37,6 +39,7 @@ public class SiteBean {
 		if (currentSelection == null && sectionList.size() != 0){
 			currentSelection = sectionList.get(0);
 		}
+		view = true;
 	}
 
 	public void selectionChanged(TreeSelectionChangeEvent selectionChangeEvent) {
@@ -47,6 +50,7 @@ public class SiteBean {
 		tree.setRowKey(currentSelectionKey);
 		currentSelection = (SectionDto) tree.getRowData();
 		tree.setRowKey(storedKey);
+		view = true;
 	}
 
 	public void submit(){
@@ -64,6 +68,7 @@ public class SiteBean {
 		section.setContent(content);
 		section.setParent(currentSelection);
 		currentSelection = section;
+		addStatus();
 	}
 
 	public void newRootSection(){
@@ -71,12 +76,22 @@ public class SiteBean {
 		Content content = new Content();
 		section.setContent(content);
 		currentSelection = section;
+		addStatus();
 	}
 
 	public void delete(){
 		sectionService.deleteSectionById(currentSelection.getId());
 		currentSelection = null;
 		load();
+	}
+	public void addStatus(){
+		status = "Add New";
+		view = false;
+	}
+
+	public void editStatus(){
+		status = "Edit";
+		view = false;
 	}
 
 	public SectionDto getCurrentSelection() {
@@ -93,5 +108,21 @@ public class SiteBean {
 
 	public void setSectionList(List<SectionDto> sectionList) {
 		this.sectionList = sectionList;
+	}
+
+	public boolean isView() {
+		return view;
+	}
+
+	public void setView(boolean view) {
+		this.view = view;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

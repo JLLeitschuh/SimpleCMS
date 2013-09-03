@@ -4,25 +4,60 @@
       xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
 <ui:composition template="WEB-INF/templates/main.xhtml">
     <ui:define name="body">
-        <h:panelGrid columns="2" columnClasses="tree,view" width="100%">
+        <h:panelGrid columns="2" columnClasses="tree" width="100%">
             <h:form>
-                <rich:tree id="tree" var="node" toggleType="client" render="edit-content delete view" toggleNodeEvent="dblclick"
+                <rich:tree id="tree" var="node" toggleType="client" render="full-content delete" toggleNodeEvent="dblclick"
                            selectionType="ajax" selectionChangeListener="#{siteBean.selectionChanged}" >
                     <rich:treeModelRecursiveAdaptor nodes="#{node.children}" roots="#{siteBean.sectionList}">
                         <rich:treeNode>#{node.name}</rich:treeNode>
                     </rich:treeModelRecursiveAdaptor>
                 </rich:tree>
-                <rich:contextMenu id="treeMenu" target="tree" mode="ajax">
+                <rich:contextMenu id="treeMenu" target="tree" mode="ajax" >
+                    <rich:menuItem label="Edit" action="#{siteBean.editStatus}" render="full-content"/>
+                    <rich:menuItem label="Add New" action="#{siteBean.newSection}" render="full-content"/>
                     <rich:menuItem label="Delete" onclick="#{rich:component('confirm')}.show()"/>
-                    <rich:menuItem label="Edit" render="edit-content" onclick="#{rich:component('edit')}.show()"/>
-                    <rich:menuItem label="Add New" render="edit-content" action="#{siteBean.newSection}" onclick="#{rich:component('edit')}.show()"/>
                 </rich:contextMenu>
-                <a4j:commandLink value="Add Root Section" action="#{siteBean.newRootSection}" onclick="#{rich:component('edit')}.show()" render="edit-content"/>
+                <a4j:commandLink value="Add Root Section" action="#{siteBean.newRootSection}" render="full-content"/>
             </h:form>
             <h:form>
-                <a4j:outputPanel id="view">
-                    #{siteBean.currentSelection.content.body}  <!--************View**************-->
-                </a4j:outputPanel>
+                <h:panelGroup id="full-content">
+                    <h:panelGroup styleClass="view" id="view" rendered="#{siteBean.view}">
+                            <a4j:outputPanel id="view-content">
+                                <h:outputText escape="false" value="#{siteBean.currentSelection.content.body}"/>
+                            </a4j:outputPanel>
+                    </h:panelGroup>
+                    <h:panelGroup id="edit" rendered="#{!siteBean.view}">
+                            <a4j:outputPanel id="edit-content" layout="block">
+                                <rich:panel header="#{siteBean.status}" rendered="#{not empty siteBean.currentSelection}">
+                                    <h:inputHidden value="#{siteBean.currentSelection.id}"/>
+                                    <table width="100%">
+                                        <tr>
+                                            <td>
+                                                Section Name:<h:inputText value="#{siteBean.currentSelection.name}"  required="true"  />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Date:<rich:calendar value="#{siteBean.currentSelection.date}"  required="true" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Published:<h:selectBooleanCheckbox value="#{siteBean.currentSelection.published}"  required="true" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:inputHidden value="#{siteBean.currentSelection.content.id}"/>
+                                                <rich:editor toolbar="full" width="100%" value="#{siteBean.currentSelection.content.body}" required="true" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <a4j:commandButton value="Save" action="#{siteBean.submit}" render="tree treeMenu full-content"/>
+                                </rich:panel>
+                            </a4j:outputPanel>
+                    </h:panelGroup>
+                </h:panelGroup>
             </h:form>
         </h:panelGrid>
 
@@ -40,41 +75,9 @@
             </h:form>
         </rich:popupPanel>
 
-        <rich:popupPanel id="edit" modal="true" autosized="true" resizeable="false">
-            <h:form>
-                <a4j:outputPanel id="edit-content" layout="block">
-                    <rich:panel header="Edit" rendered="#{not empty siteBean.currentSelection}">
-                        <h:inputHidden value="#{siteBean.currentSelection.id}"/>
-                        <table width="100%">
-                            <tr>
-                                <td>
-                                    Section Name:<h:inputText value="#{siteBean.currentSelection.name}"  required="true"  />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Date:<rich:calendar value="#{siteBean.currentSelection.date}"  required="true" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Published:<h:selectBooleanCheckbox value="#{siteBean.currentSelection.published}"  required="true" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <h:inputHidden value="#{siteBean.currentSelection.content.id}"/>
-                                    <rich:editor toolbar="full" width="100%" value="#{siteBean.currentSelection.content.body}" required="true" />
-                                </td>
-                            </tr>
-                        </table>
-                        <a4j:commandButton type="submit" value="Save" action="#{siteBean.submit}" oncomplete="#{rich:component('edit')}.hide();return false;" render="tree treeMenu"/>
-                    </rich:panel>
-                </a4j:outputPanel>
-            </h:form>
-            <h:button value="Close" onclick="#{rich:component('edit')}.hide(); return false;"/>
-        </rich:popupPanel>
-
+        <div class="logout" style="text-align: right">
+            <h:outputLink value="${request.contextPath}/j_spring_security_logout">Logout</h:outputLink>
+        </div>
     </ui:define>
 </ui:composition>
 </html>

@@ -101,7 +101,7 @@ button {
 }
 .tree{
     width: 20%;
-    height: 600px;
+    height: 700px;
     text-align: left;
 }
 .tree a{
@@ -113,9 +113,8 @@ button {
 }
 .view{
     width: 80%;
-    height: 600px;
+    height: 700px;
     text-align: center;
-    border:2px solid white;
 }
 .rf-trn-lbl{
     text-align: center;
