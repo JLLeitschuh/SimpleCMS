@@ -44,6 +44,7 @@ button {
 }
 .logout{
     text-align: right;
+    margin-right: 15px;
 }
 .logout a{
     color: #00008b;
@@ -116,7 +117,10 @@ button {
     height: 700px;
     text-align: center;
 }
-.rf-trn-lbl{
+.rf-p {
+    width: 90%;
+}
+.tree .rf-trn-lbl{
     text-align: center;
     width: 150px;
     height: 30px;
@@ -125,10 +129,28 @@ button {
     border-radius:6px;
     color: #00008b;
 }
-.rf-trn-ico-colps.rf-trn-ico{
+.tree .rf-trn-ico-colps.rf-trn-ico{
     display: none;
 
 }
-.rf-trn-ico.rf-trn-ico-exp{
+.tree .rf-trn-ico.rf-trn-ico-exp{
     display: none;
+}
+#right-panel {
+    top:35px;
+    padding:0;
+    margin-right:-650px;
+    position:fixed;
+    z-index:1000;
+    right:-3px;
+}
+.panel-content {
+    padding:12px;
+    width:550px;
+    height:536px;
+    margin-left: 90px;
+    margin-top:18px;
+    position: absolute;
+    color:#fff;
+    background-color:#797979;
 }

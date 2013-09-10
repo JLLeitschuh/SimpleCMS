@@ -75,6 +75,49 @@
             </h:form>
         </rich:popupPanel>
 
+        <rich:popupPanel id="upload-panel" modal="true" autosized="true" resizeable="false">
+            <h:form>
+                <h:panelGroup>
+                    <rich:fileUpload fileUploadListener="#{fileUploadBean.listener}" id="upload" acceptedTypes="jpg, gif, png, bmp"
+                                     ontyperejected="alert('Only JPG, GIF, PNG and BMP files are accepted');" maxFilesQuantity="5">
+                        <a4j:ajax event="uploadcomplete" execute="@none" render="files filesMenu"/>
+                    </rich:fileUpload>
+                </h:panelGroup>
+                <h:commandButton value="Cancel" onclick="#{rich:component('upload-panel')}.hide(); return false;"/>
+            </h:form>
+        </rich:popupPanel>
+
+        <div data="0" id="right-panel">
+            <div class="panel-content">
+                <h:form>
+                    <rich:tree id="files" var="item" toggleType="client" render="file-view upload" toggleNodeEvent="dblclick"
+                               selectionType="ajax" selectionChangeListener="#{fileUploadBean.selectionChanged}" >
+                        <rich:treeModelRecursiveAdaptor roots="#{fileUploadBean.sourceRoots}" nodes="#{item.directories}">
+                            <rich:treeNode>
+                                #{item.shortPath}
+                            </rich:treeNode>
+                            <rich:treeModelAdaptor nodes="#{item.files}">
+                                <rich:treeNode>#{item.shortPath}</rich:treeNode>
+                            </rich:treeModelAdaptor>
+                        </rich:treeModelRecursiveAdaptor>
+                    </rich:tree>
+                    <rich:contextMenu id="filesMenu" target="files" mode="ajax" >
+                        <rich:menuItem label="Upload File" render="upload" onclick="#{rich:component('upload-panel')}.show()"/>
+                        <rich:menuItem label="Copy URL"/>
+                        <rich:menuItem label="Delete"/>
+                    </rich:contextMenu>
+                </h:form>
+                <h:panelGroup id="file-view" layout="block">
+                    <rich:panel rendered="#{not empty fileUploadBean.currentSelection}">
+                        <a4j:mediaOutput element="img" mimeType="image/jpeg" createContent="#{fileUploadBean.paint}"
+                                         value="#{fileUploadBean.currentSelection}" style="width:100px; height:100px;" cacheable="false">
+                        </a4j:mediaOutput>
+                    </rich:panel>
+                </h:panelGroup>
+            </div>
+            <img alt="" src="${request.contextPath}/img/panel.png" onclick="PanelToggle($('#right-panel'))"/>
+        </div>
+
         <div class="logout" style="text-align: right">
             <h:outputLink value="${request.contextPath}/j_spring_security_logout">Logout</h:outputLink>
         </div>
