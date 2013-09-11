@@ -30,12 +30,11 @@ public class FileUploadBean {
 	private static final String SRC_PATH = "/img";
 	private List<FileSystemNode> srcRoots;
 	private FileSystemNode currentSelection = null;
-    private String newDirectoryName;
+    private String newDirectoryName = "";
 
 	@PostConstruct
 	public void init(){
 		srcRoots = new FileSystemNode(SRC_PATH, FileSystemTypes.DIRECTORY).getDirectories();
-        newDirectoryName = "";
 	}
 
 	private String getRealPath(String path){
@@ -88,17 +87,20 @@ public class FileUploadBean {
     }
 
 	public void delete(){
-		String filePath = getRealPath(currentSelection.getPath());
-		File file = new File(filePath);
-        boolean result;
-        if (file.isDirectory()){
-            result = deleteAllFiles(file);
-        } else{
-		    result = file.delete();
+        if (currentSelection.getShortPath().equals("files")){
+            String filePath = getRealPath(currentSelection.getPath());
+            File file = new File(filePath);
+            boolean result;
+            if (file.isDirectory()){
+                result = deleteAllFiles(file);
+            } else{
+                result = file.delete();
+            }
+            if (result){
+                init();
+                currentSelection = null;
+            }
         }
-		if (result){
-            init();
-		}
 
 	}
 

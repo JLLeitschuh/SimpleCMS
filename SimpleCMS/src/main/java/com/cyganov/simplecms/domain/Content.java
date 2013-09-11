@@ -20,7 +20,7 @@ public class Content {
 	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
 
-	@Column(name = "body", length = 255)
+	@Column(name = "body", columnDefinition="TEXT")
 	private String body;
 
 	@OneToOne
