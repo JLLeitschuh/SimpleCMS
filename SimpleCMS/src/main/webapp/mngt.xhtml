@@ -6,7 +6,7 @@
     <ui:define name="body">
         <h:panelGrid columns="2" columnClasses="tree" width="100%">
             <h:form>
-                <rich:tree id="tree" var="node" toggleType="client" render="full-content delete" toggleNodeEvent="dblclick"
+                <rich:tree id="tree" var="node" toggleType="client" render="full-content delete-section" toggleNodeEvent="dblclick"
                            selectionType="ajax" selectionChangeListener="#{siteBean.selectionChanged}" >
                     <rich:treeModelRecursiveAdaptor nodes="#{node.children}" roots="#{siteBean.sectionList}">
                         <rich:treeNode>#{node.name}</rich:treeNode>
@@ -15,7 +15,7 @@
                 <rich:contextMenu id="treeMenu" target="tree" mode="ajax" >
                     <rich:menuItem label="Edit" action="#{siteBean.editStatus}" render="full-content"/>
                     <rich:menuItem label="Add New" action="#{siteBean.newSection}" render="full-content"/>
-                    <rich:menuItem label="Delete" onclick="#{rich:component('confirm')}.show()"/>
+                    <rich:menuItem label="Delete" onclick="#{rich:component('confirm-delete-section')}.show()"/>
                 </rich:contextMenu>
                 <a4j:commandLink value="Add Root Section" action="#{siteBean.newRootSection}" render="full-content"/>
             </h:form>
@@ -61,17 +61,85 @@
             </h:form>
         </h:panelGrid>
 
-        <rich:popupPanel id="confirm" modal="true" autosized="true" resizeable="false">
+        <rich:popupPanel id="confirm-delete-section" modal="true" autosized="true" resizeable="false">
             <h:form>
-                <a4j:outputPanel id="delete" layout="block">
+                <a4j:outputPanel id="delete-section" layout="block">
                     <div>
                         <h:outputText value="Do you really want to delete '#{siteBean.currentSelection.name}' section?"/>
                     </div>
                     <div align="center">
-                        <a4j:commandButton type="submit" value="Yes" action="#{siteBean.delete}" oncomplete="#{rich:component('confirm')}.hide(); return false;" render="tree treeMenu"/>
-                        <h:button value="No" onclick="#{rich:component('confirm')}.hide(); return false;"/>
+                        <a4j:commandButton type="submit" value="Yes" action="#{siteBean.delete}"
+                                           oncomplete="#{rich:component('confirm-delete-section')}.hide(); return false;" render="tree treeMenu"/>
+                        <h:button value="No" onclick="#{rich:component('confirm-delete-section')}.hide(); return false;"/>
                     </div>
                 </a4j:outputPanel>
+            </h:form>
+        </rich:popupPanel>
+
+        <div data="0" id="right-panel">
+            <div class="panel-content">
+                <h:panelGrid columns="2" columnClasses="file-tree,file-view">
+                    <h:form>
+                        <rich:tree id="files" var="item" toggleType="client" render="file-view upload delete-file fileMenu directoryMenu" toggleNodeEvent="dblclick"
+                                   selectionType="ajax" selectionChangeListener="#{fileUploadBean.selectionChanged}" >
+                            <rich:treeModelRecursiveAdaptor roots="#{fileUploadBean.sourceRoots}" nodes="#{item.directories}">
+                                <rich:treeNode id="directory">
+                                    #{item.shortPath}
+                                </rich:treeNode>
+                                <rich:treeModelAdaptor nodes="#{item.files}">
+                                    <rich:treeNode id="file">#{item.shortPath}</rich:treeNode>
+                                </rich:treeModelAdaptor>
+                            </rich:treeModelRecursiveAdaptor>
+                        </rich:tree>
+                        <rich:contextMenu id="fileMenu" target="file" mode="ajax" >
+                            <rich:menuItem label="Copy URL" action="#{fileUploadBean.copyURL}"/>
+                            <rich:menuItem label="Delete" onclick="#{rich:component('confirm-delete-file')}.show()"/>
+                        </rich:contextMenu>
+                        <rich:contextMenu id="directoryMenu" target="directory" mode="ajax" >
+                            <rich:menuItem label="Upload Files" render="upload" onclick="#{rich:component('upload-panel')}.show()"/>
+                            <rich:menuItem label="Add Directory" onclick="#{rich:component('create-directory')}.show()"/>
+                            <rich:menuItem label="Delete" onclick="#{rich:component('confirm-delete-file')}.show()"/>
+                        </rich:contextMenu>
+                    </h:form>
+                    <h:panelGroup id="file-view" layout="block">
+                        <rich:panel rendered="#{fileUploadBean.file}">
+                            <div class="picture">
+                                <img alt="img" src="${request.contextPath}#{fileUploadBean.currentSelection.path}"/>
+                            </div>
+                            <div class="file-url">
+                                <h:outputText value="#{fileUploadBean.currentSelection.path}"/>
+                            </div>
+                        </rich:panel>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </div>
+            <img alt="img" src="${request.contextPath}/img/panel.png" onclick="PanelToggle($('#right-panel'))"/>
+        </div>
+
+        <rich:popupPanel id="confirm-delete-file" modal="true" autosized="true" resizeable="false">
+            <h:form>
+                <a4j:outputPanel id="delete-file" layout="block">
+                    <div>
+                        <h:outputText value="Do you really want to delete #{fileUploadBean.currentSelection.shortPath} ?"/>
+                    </div>
+                    <div align="center">
+                        <a4j:commandButton type="submit" value="Yes" action="#{fileUploadBean.delete}"
+                                           oncomplete="#{rich:component('confirm-delete-file')}.hide(); return false;" render="files fileMenu directoryMenu file-view"/>
+                        <h:button value="No" onclick="#{rich:component('confirm-delete-file')}.hide(); return false;"/>
+                    </div>
+                </a4j:outputPanel>
+            </h:form>
+        </rich:popupPanel>
+
+        <rich:popupPanel id="create-directory" modal="true" autosized="true" resizeable="false">
+            <h:form>
+                <h:panelGroup>
+                    Directory Name:<h:inputText value="#{fileUploadBean.newDirectoryName}"  required="true"  />
+
+                    <a4j:commandButton value="Add" action="#{fileUploadBean.createDirectory}"
+                                       oncomplete="#{rich:component('create-directory')}.hide(); return false;" render="files fileMenu directoryMenu"/>
+                </h:panelGroup>
+                <h:commandButton value="Cancel" onclick="#{rich:component('create-directory')}.hide(); return false;"/>
             </h:form>
         </rich:popupPanel>
 
@@ -80,43 +148,12 @@
                 <h:panelGroup>
                     <rich:fileUpload fileUploadListener="#{fileUploadBean.listener}" id="upload" acceptedTypes="jpg, gif, png, bmp"
                                      ontyperejected="alert('Only JPG, GIF, PNG and BMP files are accepted');" maxFilesQuantity="5">
-                        <a4j:ajax event="uploadcomplete" execute="@none" render="files filesMenu"/>
+                        <a4j:ajax event="uploadcomplete" execute="@none" render="files fileMenu directoryMenu"/>
                     </rich:fileUpload>
                 </h:panelGroup>
                 <h:commandButton value="Cancel" onclick="#{rich:component('upload-panel')}.hide(); return false;"/>
             </h:form>
         </rich:popupPanel>
-
-        <div data="0" id="right-panel">
-            <div class="panel-content">
-                <h:form>
-                    <rich:tree id="files" var="item" toggleType="client" render="file-view upload" toggleNodeEvent="dblclick"
-                               selectionType="ajax" selectionChangeListener="#{fileUploadBean.selectionChanged}" >
-                        <rich:treeModelRecursiveAdaptor roots="#{fileUploadBean.sourceRoots}" nodes="#{item.directories}">
-                            <rich:treeNode>
-                                #{item.shortPath}
-                            </rich:treeNode>
-                            <rich:treeModelAdaptor nodes="#{item.files}">
-                                <rich:treeNode>#{item.shortPath}</rich:treeNode>
-                            </rich:treeModelAdaptor>
-                        </rich:treeModelRecursiveAdaptor>
-                    </rich:tree>
-                    <rich:contextMenu id="filesMenu" target="files" mode="ajax" >
-                        <rich:menuItem label="Upload File" render="upload" onclick="#{rich:component('upload-panel')}.show()"/>
-                        <rich:menuItem label="Copy URL"/>
-                        <rich:menuItem label="Delete"/>
-                    </rich:contextMenu>
-                </h:form>
-                <h:panelGroup id="file-view" layout="block">
-                    <rich:panel rendered="#{not empty fileUploadBean.currentSelection}">
-                        <a4j:mediaOutput element="img" mimeType="image/jpeg" createContent="#{fileUploadBean.paint}"
-                                         value="#{fileUploadBean.currentSelection}" style="width:100px; height:100px;" cacheable="false">
-                        </a4j:mediaOutput>
-                    </rich:panel>
-                </h:panelGroup>
-            </div>
-            <img alt="" src="${request.contextPath}/img/panel.png" onclick="PanelToggle($('#right-panel'))"/>
-        </div>
 
         <div class="logout" style="text-align: right">
             <h:outputLink value="${request.contextPath}/j_spring_security_logout">Logout</h:outputLink>

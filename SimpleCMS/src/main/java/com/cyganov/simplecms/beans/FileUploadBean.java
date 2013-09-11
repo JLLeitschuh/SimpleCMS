@@ -8,11 +8,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.io.*;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,19 +23,19 @@ import java.util.List;
  * Date: 05.09.13
  * Time: 12:02
  */
-//@Component
-//@Scope("session")
-@ManagedBean
-@SessionScoped
+@Component
+@Scope("session")
 public class FileUploadBean {
 
 	private static final String SRC_PATH = "/img";
 	private List<FileSystemNode> srcRoots;
 	private FileSystemNode currentSelection = null;
+    private String newDirectoryName;
 
 	@PostConstruct
-	public void loadFiles(){
+	public void init(){
 		srcRoots = new FileSystemNode(SRC_PATH, FileSystemTypes.DIRECTORY).getDirectories();
+        newDirectoryName = "";
 	}
 
 	private String getRealPath(String path){
@@ -42,19 +43,78 @@ public class FileUploadBean {
 				.getExternalContext().getRealPath(path);
 	}
 
-	public synchronized List<FileSystemNode> getSourceRoots() {
-		return srcRoots;
+	public boolean isFile(){
+		return currentSelection != null && currentSelection.getType().equals(FileSystemTypes.FILE);
 	}
 
 	public void selectionChanged(TreeSelectionChangeEvent selectionChangeEvent) {
 		List<Object> selection = new ArrayList<Object>(selectionChangeEvent.getNewSelection());
 		Object currentSelectionKey = selection.get(0);
 		UITree tree = (UITree) selectionChangeEvent.getSource();
-		Object storedKey = tree.getRowKey();
 		tree.setRowKey(currentSelectionKey);
 		currentSelection = (FileSystemNode) tree.getRowData();
-		tree.setRowKey(storedKey);
 	}
+
+	public void listener(FileUploadEvent event) throws IOException {
+		UploadedFile item = event.getUploadedFile();
+
+		String file = getRealPath(currentSelection.getPath() + "/" + item.getName());
+
+		OutputStream output = new FileOutputStream(file);
+		try {
+			output.write(item.getData());
+            init();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			output.close();
+		}
+	}
+
+    public void copyURL(){
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable transferable = new StringSelection(currentSelection.getPath());
+        clipboard.setContents(transferable, null);
+    }
+
+    public void createDirectory(){
+        String path = getRealPath(currentSelection.getPath() + "/" + newDirectoryName);
+        File file = new File(path);
+        boolean result = file.mkdirs();
+        if (result){
+            init();
+        }
+
+    }
+
+	public void delete(){
+		String filePath = getRealPath(currentSelection.getPath());
+		File file = new File(filePath);
+        boolean result;
+        if (file.isDirectory()){
+            result = deleteAllFiles(file);
+        } else{
+		    result = file.delete();
+        }
+		if (result){
+            init();
+		}
+
+	}
+
+    private boolean deleteAllFiles (File file){
+        File[] files = file.listFiles();
+        if (files != null){
+            for (File current : files) {
+                if (file.isDirectory()){
+                    deleteAllFiles(current);
+                } else {
+                    file.delete();
+                }
+            }
+        }
+        return file.delete();
+    }
 
 	public FileSystemNode getCurrentSelection() {
 		return currentSelection;
@@ -64,24 +124,15 @@ public class FileUploadBean {
 		this.currentSelection = currentSelection;
 	}
 
-	public void paint(OutputStream stream, Object object) throws IOException {
-		if (currentSelection.getType().equals(FileSystemTypes.FILE)){
-			String path = getRealPath(currentSelection.getPath());
-			byte[] data = Files.readAllBytes(new File(path).toPath());
-			stream.write(data);
-		}
-		stream.close(); //TODO:fix:try/finally
+	public synchronized List<FileSystemNode> getSourceRoots() {
+		return srcRoots;
 	}
 
-	public void listener(FileUploadEvent event) throws Exception {
-		UploadedFile item = event.getUploadedFile();
+    public String getNewDirectoryName() {
+        return newDirectoryName;
+    }
 
-		String file = getRealPath(currentSelection.getPath() + "/" + item.getName());
-
-		OutputStream output = new FileOutputStream(file);
-		output.write(item.getData());
-		output.close(); //TODO:fix:try/finally
-		loadFiles();
-	}
-
+    public void setNewDirectoryName(String newDirectoryName) {
+        this.newDirectoryName = newDirectoryName;
+    }
 }

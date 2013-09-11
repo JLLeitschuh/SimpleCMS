@@ -154,3 +154,32 @@ button {
     color:#fff;
     background-color:#797979;
 }
+.file-tree{
+    height: 300px;
+    width: 200px;
+    text-align: left;
+}
+.file-view{
+    height: 200px;
+    width: 400px;
+}
+.file-view .rf-p{
+    background-color:#797979;
+    border: none;
+}
+.file-view .rf-p-b{
+    background-color:#797979;
+    text-align: center;
+}
+.picture img {
+    max-width:200px;
+    max-height:200px;
+    border: 2px solid white;
+}
+.file-url{
+    color: #00008b;
+    background-color: #add8e6;
+    text-align: center;
+    padding-top: 2px;
+    border: 2px solid white;
+}
