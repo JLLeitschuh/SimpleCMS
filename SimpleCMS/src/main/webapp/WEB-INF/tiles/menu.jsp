@@ -3,5 +3,5 @@
         |
         <a href="/mngt.jsf">Site Management</a>
         |
-        <a href="/users">User Management</a>
+        <a href="/users.jsf">User Management</a>
 </div>

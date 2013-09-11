@@ -27,18 +27,18 @@ public class SiteController {
 	@Autowired
 	private SectionService sectionService;
 
-	@Autowired
-	private UserService userService;
+//	@Autowired
+//	private UserService userService;
 
-	@RequestMapping(value = "/users", method = RequestMethod.GET)
-	public ModelAndView loadUsers() {
-		ModelAndView modelAndView = new ModelAndView("users");
-
-		List<UserDto> userList = userService.getUsers();
-
-		modelAndView.addObject("users", userList);
-		return modelAndView;
-	}
+//	@RequestMapping(value = "/users", method = RequestMethod.GET)
+//	public ModelAndView loadUsers() {
+//		ModelAndView modelAndView = new ModelAndView("users");
+//
+//		List<UserDto> userList = userService.getUsers();
+//
+//		modelAndView.addObject("users", userList);
+//		return modelAndView;
+//	}
 
 	@RequestMapping(value = "/site", method = RequestMethod.GET)
 	public ModelAndView loadSite(@RequestParam(value = "rootId", required = false) String rootId, @RequestParam(value = "sectionId", required = false) String sectionId) {
@@ -116,29 +116,29 @@ public class SiteController {
 //		return "redirect:/"+page;
 //	}
 
-	@RequestMapping(value = "/users/add", method = RequestMethod.GET)
-	public ModelAndView addUser(@RequestParam(value = "id", required = false) String id) {
-		ModelAndView modelAndView = new ModelAndView("addUser");
-
-		if (StringUtils.isEmpty(id)){
-			modelAndView.addObject("user", new UserDto());
-		} else {
-			modelAndView.addObject("user", userService.getUserByName(id));
-		}
-		return modelAndView;
-	}
-
-	@RequestMapping(value = "/users/add", method = RequestMethod.POST)
-	public String addUser(@ModelAttribute("user") UserDto user) {
-		userService.updateUser(user);
-		return "redirect:/users";
-	}
-
-	@RequestMapping(value = "/users/delete", method = RequestMethod.GET)
-	public String delete(@RequestParam("id") String id) {
-		userService.deleteByName(id);
-		return "redirect:/users";
-	}
+//	@RequestMapping(value = "/users/add", method = RequestMethod.GET)
+//	public ModelAndView addUser(@RequestParam(value = "id", required = false) String id) {
+//		ModelAndView modelAndView = new ModelAndView("addUser");
+//
+//		if (StringUtils.isEmpty(id)){
+//			modelAndView.addObject("user", new UserDto());
+//		} else {
+//			modelAndView.addObject("user", userService.getUserByName(id));
+//		}
+//		return modelAndView;
+//	}
+//
+//	@RequestMapping(value = "/users/add", method = RequestMethod.POST)
+//	public String addUser(@ModelAttribute("user") UserDto user) {
+//		userService.updateUser(user);
+//		return "redirect:/users";
+//	}
+//
+//	@RequestMapping(value = "/users/delete", method = RequestMethod.GET)
+//	public String delete(@RequestParam("id") String id) {
+//		userService.deleteByName(id);
+//		return "redirect:/users";
+//	}
 
 	@InitBinder
 	protected void initBinder(ServletRequestDataBinder binder) throws Exception {

@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
+<ui:composition template="WEB-INF/templates/main.xhtml">
+    <ui:define name="body">
+        <h:form>
+            <h:panelGroup id="user-list">
+                <table class="users">
+                    <tr class="head">
+                        <td>Name</td>
+                        <td>Role</td>
+                        <td>Edit</td>
+                        <td>Delete</td>
+                    </tr>
+                    <ui:repeat value="#{userBean.userList}" var="record">
+                        <tr>
+                            <td>
+                                <h:outputText value="${record.username}" />
+                            </td>
+                            <td>
+                                <h:outputText value="${record.authorities}" />
+                            </td>
+                            <td>
+                                <a4j:commandLink value="Edit" action="#{userBean.userForEdit(record)}" oncomplete="#{rich:component('edit-panel')}.show()" render="edit"/>
+                            </td>
+                            <td>
+                                <a4j:commandLink value="Delete" action="#{userBean.userForEdit(record)}" oncomplete="#{rich:component('confirm-delete')}.show()" render="delete-file"/>
+                            </td>
+                        </tr>
+                    </ui:repeat>
+                </table>
+            </h:panelGroup>
+            <a4j:commandButton value="Add User" action="#{userBean.emptyUser}" oncomplete="#{rich:component('edit-panel')}.show()"/>
+        </h:form>
+
+        <rich:popupPanel id="confirm-delete" modal="true" autosized="true" resizeable="false">
+            <h:form>
+                <a4j:outputPanel id="delete-file" layout="block">
+                    <div>
+                        <h:outputText value="Do you really want to delete '#{userBean.user.username}' user?"/>
+                    </div>
+                    <div align="center">
+                        <a4j:commandButton type="submit" value="Yes" action="#{userBean.deleteUser}"
+                                           oncomplete="#{rich:component('confirm-delete')}.hide(); return false;" render="user-list delete-file"/>
+                        <a4j:commandButton value="No" action="#{userBean.emptyUser}" oncomplete="#{rich:component('confirm-delete')}.hide(); return false;" render="delete-file"/>
+                    </div>
+                </a4j:outputPanel>
+            </h:form>
+        </rich:popupPanel>
+
+        <rich:popupPanel id="edit-panel" modal="true" autosized="true" resizeable="false">
+            <h:form>
+                <h:panelGroup id="edit">
+                    <table>
+                        <tr>
+                            <td>Name:</td>
+                            <td><h:inputText value="#{userBean.user.username}"  required="true"  /></td>
+                        </tr>
+                        <tr>
+                            <td>Password:</td>
+                            <td><h:inputText value="#{userBean.user.password}"  required="true"  /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Enabled:
+                                <h:selectBooleanCheckbox value="#{userBean.user.enabled}"  required="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Roles:</td>
+                            <td>
+                                <h:selectManyCheckbox value="#{userBean.user.authorities}">
+                                   <f:selectItem itemValue="ROLE_USER" itemLabel="USER"/>
+                                   <f:selectItem itemValue="ROLE_ADMIN" itemLabel="ADMIN"/>
+                                   <f:selectItem itemValue="ROLE_SUPERVISOR" itemLabel="SUPERVISOR"/>
+                                </h:selectManyCheckbox>
+                            </td>
+                        </tr>
+                    </table>
+                    <a4j:commandButton value="Save" action="#{userBean.editUser}"
+                                       oncomplete="#{rich:component('edit-panel')}.hide(); return false;" render="user-list edit"/>
+                </h:panelGroup>
+                <a4j:commandButton value="Cancel" action="#{userBean.emptyUser}" oncomplete="#{rich:component('edit-panel')}.hide(); return false;" render="edit"/>
+            </h:form>
+        </rich:popupPanel>
+
+        <div class="logout" style="text-align: right">
+            <h:outputLink value="${request.contextPath}/j_spring_security_logout">Logout</h:outputLink>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>
