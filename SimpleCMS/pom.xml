@@ -17,7 +17,7 @@
   <repositories>
         <repository>
             <id>repository.jboss.org</id>
-            <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
@@ -27,7 +27,7 @@
         </repository>
         <repository>
             <id>repository.central</id>
-            <url>http://repo1.maven.org/maven2/</url>
+            <url>https://repo1.maven.org/maven2/</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
@@ -37,7 +37,7 @@
         </repository>
         <repository>
             <id>terracotta-releases</id>
-            <url>http://www.terracotta.org/download/reflector/releases</url>
+            <url>https://www.terracotta.org/download/reflector/releases</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
